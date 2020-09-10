@@ -3,12 +3,12 @@ import "firebase/auth";
 import "firebase/database";
 
 const config = {
-  apiKey: "AIzaSyBgS8bNO-TDO08ZsggsG4z-C3_QinKFtDI",
-  authDomain: "hotel-technika.firebaseapp.com",
-  databaseURL: "https://hotel-technika.firebaseio.com",
-  projectId: "hotel-technika",
-  storageBucket: "hotel-technika.appspot.com",
-  messagingSenderId: "823010218984",
+  apiKey: "AIzaSyBy6yTwdfxEqNm26G7XBsE6Jum85yiYgj0",
+  authDomain: "test-authentication-5541c.firebaseapp.com",
+  databaseURL: "https://test-authentication-5541c.firebaseio.com",
+  projectId: "test-authentication-5541c",
+  storageBucket: "test-authentication-5541c.appspot.com",
+  messagingSenderId: "173710943840",
 
   // apiKey: process.env.REACT_APP_API_KEY,
   // authDomain: process.env.REACT_APP_AUTH_DOMAIN,
