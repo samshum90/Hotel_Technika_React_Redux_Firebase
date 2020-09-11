@@ -99,6 +99,11 @@ class MessagesBase extends Component {
       <AuthUserContext.Consumer>
         {(authUser) => (
           <div>
+            {!loading && messages && (
+              <button type="button" onClick={this.onNextPage}>
+                More
+              </button>
+            )}
             {loading && <div>Loading ...</div>}
 
             {messages ? (
