@@ -18,13 +18,10 @@ const withAuthentication = (Component) => {
         (authUser) => {
           localStorage.setItem("authUser", JSON.stringify(authUser));
           this.setState({ authUser });
-          console.log("set localStorage");
         },
         () => {
           localStorage.removeItem("authUser");
           this.setState({ authUser: null });
-
-          console.log("remove localStorage");
         }
       );
     }

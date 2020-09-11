@@ -43,7 +43,6 @@ class Firebase {
         this.user(authUser.uid)
           .once("value")
           .then((snapshot) => {
-            console.log("firebase");
             const dbUser = snapshot.val();
 
             if (!dbUser.roles) {
