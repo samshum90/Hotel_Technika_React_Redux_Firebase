@@ -20,29 +20,38 @@ class MessagesBase extends Component {
       text: "",
       loading: false,
       messages: [],
+      limit: 5,
     };
   }
 
   componentDidMount() {
+    this.onListenForMessages();
+  }
+
+  onListenForMessages() {
     this.setState({ loading: true });
 
-    this.props.firebase.messages().on("value", (snapshot) => {
-      const messageObject = snapshot.val();
+    this.props.firebase
+      .messages()
+      .orderByChild("createdAt")
+      .limitToLast(this.state.limit)
+      .on("value", (snapshot) => {
+        const messageObject = snapshot.val();
 
-      if (messageObject) {
-        const messageList = Object.keys(messageObject).map((key) => ({
-          ...messageObject[key],
-          uid: key,
-        }));
+        if (messageObject) {
+          const messageList = Object.keys(messageObject).map((key) => ({
+            ...messageObject[key],
+            uid: key,
+          }));
 
-        this.setState({
-          messages: messageList,
-          loading: false,
-        });
-      } else {
-        this.setState({ messages: null, loading: false });
-      }
-    });
+          this.setState({
+            messages: messageList,
+            loading: false,
+          });
+        } else {
+          this.setState({ messages: null, loading: false });
+        }
+      });
   }
 
   componentWillUnmount() {
@@ -75,8 +84,12 @@ class MessagesBase extends Component {
     this.props.firebase.message(message.uid).set({
       ...messageSnapshot,
       text,
-      editedAt: this.props.firebase.severValue.TIMESTAMP,
+      editedAt: this.props.firebase.serverValue.TIMESTAMP,
     });
+  };
+
+  onNextPage = () => {
+    this.setState((state) => ({ limit: state + 5 }), this.onListenForMessages);
   };
 
   render() {
