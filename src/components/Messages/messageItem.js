@@ -28,8 +28,9 @@ class MessageItem extends Component {
   };
 
   render() {
-    const { authUser, message, onRemoveMessage } = this.props;
+    const { message, onRemoveMessage } = this.props;
     const { editMode, editText } = this.state;
+
     return (
       <li>
         {editMode ? (
@@ -40,31 +41,24 @@ class MessageItem extends Component {
           />
         ) : (
           <span>
-            <strong>{message.userId}</strong> {message.text}
-            {message.editedAt && <span>(Edited)</span>}
+            <strong>{message.user.username || message.user.userId}</strong>{" "}
+            {message.text} {message.editedAt && <span>(Edited)</span>}
           </span>
         )}
 
-        {authUser.uid === message.userId && (
+        {editMode ? (
           <span>
-            {editMode ? (
-              <span>
-                <button onClick={this.onSaveEditText}>Save</button>
-                <button onClick={this.onToggleEditMode}>Reset</button>
-              </span>
-            ) : (
-              <button onClick={this.onToggleEditMode}>Edit</button>
-            )}
-
-            {!editMode && (
-              <button
-                type="button"
-                onClick={() => onRemoveMessage(message.uid)}
-              >
-                Delete
-              </button>
-            )}
+            <button onClick={this.onSaveEditText}>Save</button>
+            <button onClick={this.onToggleEditMode}>Reset</button>
           </span>
+        ) : (
+          <button onClick={this.onToggleEditMode}>Edit</button>
+        )}
+
+        {!editMode && (
+          <button type="button" onClick={() => onRemoveMessage(message.uid)}>
+            Delete
+          </button>
         )}
       </li>
     );

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 
 import { withFirebase } from "../Firebase";
-import { MessageList } from "./MessageList";
+import MessageList from "./MessageList";
 
 class Messages extends Component {
   constructor(props) {
@@ -81,7 +81,7 @@ class Messages extends Component {
   };
 
   render() {
-    const { messages } = this.props;
+    const { users, messages } = this.props;
     const { text, loading } = this.state;
 
     return (
@@ -93,16 +93,19 @@ class Messages extends Component {
         )}
         {loading && <div>Loading ...</div>}
 
-        {messages ? (
+        {messages && (
           <MessageList
-            authUser={authUser}
-            messages={messages}
-            onRemoveMessage={this.onRemoveMessage}
+            messages={messages.map((message) => ({
+              ...message,
+              user: users ? users[message.userId] : { userId: message.userId },
+            }))}
             onEditMessage={this.onEditMessage}
+            onRemoveMessage={this.onRemoveMessage}
           />
-        ) : (
-          <div>There are no messages ...</div>
         )}
+
+        {!messages && <div>There are no messages ...</div>}
+
         <form
           onSubmit={(event) => this.onCreateMessage(event, this.props.authUser)}
         >

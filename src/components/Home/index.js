@@ -1,5 +1,5 @@
 import React from "react";
-import { Messages } from "../Messages";
+import Messages from "../Messages";
 import { compose } from "recompose";
 
 import { withAuthorization } from "../Session";

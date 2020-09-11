@@ -1,21 +1,15 @@
 import React from "react";
 
-import { MessageItem } from "./MessageItem";
+import MessageItem from "./MessageItem";
 
-const MessageList = ({
-  authUser,
-  messages,
-  onRemoveMessage,
-  onEditMessage,
-}) => (
+const MessageList = ({ messages, onEditMessage, onRemoveMessage }) => (
   <ul>
     {messages.map((message) => (
       <MessageItem
         key={message.uid}
-        authUser={authUser}
         message={message}
-        onRemoveMessage={onRemoveMessage}
         onEditMessage={onEditMessage}
+        onRemoveMessage={onRemoveMessage}
       />
     ))}
   </ul>
