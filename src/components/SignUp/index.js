@@ -53,8 +53,13 @@ class SignUpFormBase extends Component {
       });
     event.preventDefault();
   };
+
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  onChangeCheckbox = (event) => {
+    this.setState({ [event.target.name]: event.target.checked });
   };
 
   render() {
@@ -115,7 +120,6 @@ class SignUpFormBase extends Component {
         <button disabled={isInvalid} type="submit">
           Sign Up
         </button>
-
         {error && <p>{error.message}</p>}
       </form>
     );
