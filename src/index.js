@@ -2,16 +2,32 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { Provider } from "react-redux";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import store from "./store";
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./components/Firebase";
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#455a64",
+      contrastText: "#ffeb3b",
+    },
+    secondary: {
+      main: "#ffeb3b",
+      contrastText: "#000000",
+    },
+  },
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <FirebaseContext.Provider value={new Firebase()}>
-      <App />
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
     </FirebaseContext.Provider>
   </Provider>,
   document.getElementById("root")
