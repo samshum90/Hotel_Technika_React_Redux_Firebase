@@ -1,9 +1,14 @@
 import React from "react";
 
+import landingImage from "./landing.jpg";
+import "./landing.css";
+
 const Landing = () => (
-  <div>
-    <h1>Landing</h1>
-  </div>
+  <img
+    className="landing"
+    src={landingImage}
+    alt="Landing page of a Hotel room"
+  />
 );
 
 export default Landing;
