@@ -3,6 +3,7 @@ import { withFirebase } from "../Firebase";
 import { useInput } from "../hooks/input-hook";
 import { compose } from "recompose";
 import { withAuthorization } from "../Session";
+import * as ROUTES from "../../constants/routes";
 import {
   Radio,
   FormControl,
@@ -12,7 +13,8 @@ import {
   TextField,
 } from "@material-ui/core";
 
-function Register(props) {
+function Register() {
+  const [error, setError] = useState("");
   const {
     value: firstName,
     bind: bindFirstName,
@@ -69,9 +71,10 @@ function Register(props) {
       postcode,
     };
 
-    props.firebase.saveData(person, "guests");
-
-    alert(`Submitting Name 
+    this.props.firebase
+      .saveData(person, "guests")
+      .then(() => {
+        alert(`Submitting Name 
     ${firstName} 
     ${lastName} 
     ${gender} 
@@ -81,14 +84,20 @@ function Register(props) {
     ${address} 
     ${postcode} 
     `);
-    resetFirstName();
-    resetLastName();
-    setGender("");
-    resetDateOfBirth();
-    resetContactNumber();
-    resetEmail();
-    resetAddress();
-    resetPostcode();
+        resetFirstName();
+        resetLastName();
+        setGender("");
+        resetDateOfBirth();
+        resetContactNumber();
+        resetEmail();
+        resetAddress();
+        resetPostcode();
+        this.props.history.push(ROUTES.HOME);
+      })
+      .catch((error) => {
+        setError({ error });
+        alert(`${error} `);
+      });
   };
 
   return (

@@ -1,6 +1,8 @@
 import React from "react";
 import { compose } from "recompose";
 import { Link } from "react-router-dom";
+
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
@@ -9,10 +11,12 @@ import register from "./register.jpg";
 import booking from "./booking.jpg";
 import activities from "./activities.jpg";
 import staff from "./staff.jpg";
+import room from "./room.jpg";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 
 import * as ROUTES from "../../constants/routes";
+import * as ROLES from "../../constants/roles";
 
 const images = [
   {
@@ -20,30 +24,42 @@ const images = [
     title: "Register",
     width: "31%",
     link: ROUTES.REGISTER,
+    auth: [ROLES.STAFF, ROLES.ADMIN],
   },
   {
     url: booking,
     title: "Bookings",
     width: "31%",
     link: ROUTES.BOOKINGS,
+    auth: [ROLES.STAFF, ROLES.ADMIN],
   },
   {
     url: activities,
     title: "Activities",
     width: "31%",
     link: ROUTES.ACTIVITIES,
+    auth: [ROLES.GUEST, ROLES.STAFF, ROLES.ADMIN],
   },
   {
     url: staff,
     title: "Staff",
     width: "31%",
     link: ROUTES.STAFF,
+    auth: ROLES.ADMIN,
+  },
+  {
+    url: room,
+    title: "Rooms",
+    width: "31%",
+    link: ROUTES.ROOM,
+    auth: ROLES.ADMIN,
   },
   {
     url: "",
     title: "Admin",
     width: "31%",
     link: ROUTES.ADMIN,
+    auth: ROLES.ADMIN,
   },
 ];
 
@@ -67,9 +83,6 @@ const useStyles = makeStyles((theme) => ({
       zIndex: 1,
       "& $imageBackdrop": {
         opacity: 0.15,
-      },
-      "& $imageMarked": {
-        opacity: 0,
       },
       "& $imageTitle": {
         border: "4px solid currentColor",
@@ -115,8 +128,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = () => {
+const Home = ({ authUser }) => {
   const classes = useStyles();
+  const adminImages = images.filter((image) => {
+    const roleNeeded = Object.values(authUser.roles);
+    console.log(image.auth.includes(roleNeeded[0]));
+    return image.auth.includes(roleNeeded[0]);
+  });
 
   return (
     <div className={classes.root}>
@@ -125,7 +143,7 @@ const Home = () => {
           backgroundImage: "./register.jpg",
         }}
       />
-      {images.map((image) => (
+      {adminImages.map((image) => (
         <ButtonBase
           focusRipple
           key={image.title}
@@ -160,6 +178,14 @@ const Home = () => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  authUser: state.sessionState.authUser,
+});
+
 const condition = (authUser) => !!authUser;
 
-export default compose(withFirebase, withAuthorization(condition))(Home);
+export default compose(
+  withFirebase,
+  withAuthorization(condition),
+  connect(mapStateToProps)
+)(Home);

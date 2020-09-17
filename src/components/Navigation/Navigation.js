@@ -17,10 +17,17 @@ const mapStateToProps = (state) => ({
 
 const NavigationAuth = ({ authUser }) => (
   <Typography className="navigation">
-    <Link to={ROUTES.LANDING}>Landing</Link>
     <Link to={ROUTES.HOME}>Home</Link>
-    <Link to={ROUTES.ACCOUNT}>Account</Link>
+    {(!!authUser.roles[ROLES.ADMIN] || !!authUser.roles[ROLES.STAFF]) && (
+      <Link to={ROUTES.REGISTER}>Register</Link>
+    )}
+    {(!!authUser.roles[ROLES.ADMIN] || !!authUser.roles[ROLES.STAFF]) && (
+      <Link to={ROUTES.BOOKINGS}>Bookings</Link>
+    )}
+    {!!authUser.roles[ROLES.ADMIN] && <Link to={ROUTES.ROOM}>Rooms</Link>}
+    {!!authUser.roles[ROLES.ADMIN] && <Link to={ROUTES.STAFF}>Staff</Link>}
     {!!authUser.roles[ROLES.ADMIN] && <Link to={ROUTES.ADMIN}>Admin</Link>}
+    <Link to={ROUTES.ACCOUNT}>Account</Link>
     <SignOutButton />
   </Typography>
 );
