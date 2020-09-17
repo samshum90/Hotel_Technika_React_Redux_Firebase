@@ -13,7 +13,6 @@ import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 
 import * as ROUTES from "../../constants/routes";
-import * as ROLES from "../../constants/roles";
 
 const images = [
   {

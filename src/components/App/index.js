@@ -6,6 +6,10 @@ import SignUp from "../SignUp";
 import SignIn from "../SignIn";
 import PasswordForget from "../PasswordForget";
 import Home from "../Home";
+import Register from "../Register";
+import Booking from "../Booking";
+import Activities from "../Activities";
+import Staff from "../Home";
 import Account from "../Account";
 import Admin from "../Admin";
 
@@ -22,6 +26,10 @@ const App = () => (
       <Route path={ROUTES.SIGN_IN} component={SignIn} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
       <Route path={ROUTES.HOME} component={Home} />
+      <Route path={ROUTES.REGISTER} component={Register} />
+      <Route path={ROUTES.BOOKINGS} component={Booking} />
+      <Route path={ROUTES.ACTIVITIES} component={Activities} />
+      <Route path={ROUTES.STAFF} component={Staff} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.ADMIN} component={Admin} />
     </div>
