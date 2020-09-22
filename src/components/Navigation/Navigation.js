@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import SignOutButton from "../SignOut";
 import "./Navigation.css";
-import { Typography } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
@@ -17,7 +17,9 @@ const mapStateToProps = (state) => ({
 
 const NavigationAuth = ({ authUser }) => (
   <Typography className="navigation">
-    <Link to={ROUTES.HOME}>Home</Link>
+    <Button color="primary">
+      <Link to={ROUTES.HOME}>Home</Link>
+    </Button>
     {(!!authUser.roles[ROLES.ADMIN] || !!authUser.roles[ROLES.STAFF]) && (
       <Link to={ROUTES.REGISTER}>Register</Link>
     )}

@@ -132,7 +132,6 @@ const Home = ({ authUser }) => {
   const classes = useStyles();
   const adminImages = images.filter((image) => {
     const roleNeeded = Object.values(authUser.roles);
-    console.log(image.auth.includes(roleNeeded[0]));
     return image.auth.includes(roleNeeded[0]);
   });
 
