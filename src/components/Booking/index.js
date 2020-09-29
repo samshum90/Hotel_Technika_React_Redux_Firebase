@@ -1,5 +1,3 @@
-import React from "react";
+import Bookings from "./Bookings";
 
-export default function Booking() {
-  return <h1>Booking</h1>;
-}
+export default Bookings;
