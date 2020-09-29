@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     width: "25ch",
   },
   paper: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
   },
   button: {
     marginTop: theme.spacing(2),
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RoomForm(props) {
-  const [beds, setBeds] = useState([]);
-  const [error, setError] = useState([]);
+  // const [beds, setBeds] = useState([]);
+  const [error, setError] = useState("");
   const classes = useStyles();
 
   const {

@@ -42,6 +42,8 @@ class Firebase {
   // DIY API
   saveData = (data, collection) => this.db.ref(`/${collection}`).push(data);
 
+  fetch = (collection) => this.db.ref(`${collection}`);
+
   // Message API
   message = (uid) => this.db.ref(`messages/${uid}`);
 
