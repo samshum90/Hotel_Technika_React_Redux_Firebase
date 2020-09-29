@@ -34,6 +34,16 @@ function Rooms(props) {
     });
   }
 
+  function onRemoveRoom(uid) {
+    props.firebase.fetchId("rooms", uid).remove();
+  }
+
+  function onEditRoom(room, editedRoom) {
+    props.firebase.fetchId("rooms", room.uid).set({
+      ...editedRoom,
+    });
+  }
+
   return (
     <Container maxWidth="xl">
       <RoomForm />
@@ -42,6 +52,8 @@ function Rooms(props) {
         rooms={rooms.map((room) => ({
           ...room,
         }))}
+        onRemoveRoom={onRemoveRoom}
+        onEditRoom={onEditRoom}
       />
     </Container>
   );

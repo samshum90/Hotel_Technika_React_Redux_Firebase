@@ -44,6 +44,8 @@ class Firebase {
 
   fetch = (collection) => this.db.ref(`${collection}`);
 
+  fetchId = (collection, uid) => this.db.ref(`${collection}/${uid}`);
+
   // Message API
   message = (uid) => this.db.ref(`messages/${uid}`);
 

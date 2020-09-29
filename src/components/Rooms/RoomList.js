@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-function RoomList({ loading, rooms }) {
+function RoomList({ loading, rooms, onRemoveRoom, onEditRoom }) {
   const classes = useStyles();
 
   return (
@@ -34,7 +34,14 @@ function RoomList({ loading, rooms }) {
         <TableBody>
           {loading && <TableLoading />}
           {rooms &&
-            rooms.map((room) => <RoomListItem key={room.uid} room={room} />)}
+            rooms.map((room) => (
+              <RoomListItem
+                key={room.uid}
+                room={room}
+                onRemoveRoom={onRemoveRoom}
+                onEditRoom={onEditRoom}
+              />
+            ))}
         </TableBody>
       </Table>
     </TableContainer>
