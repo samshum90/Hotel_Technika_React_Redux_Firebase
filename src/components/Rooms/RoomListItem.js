@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
 
 function RoomListItem({ room, onRemoveRoom, onEditRoom }) {
   const classes = useStyles();
-
   const [editMode, setEditMode] = useState(false);
+
   const { value: roomNumber, bind: bindRoomNumber } = useInput(
     `${room.roomNumber}`
   );

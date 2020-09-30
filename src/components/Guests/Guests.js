@@ -3,6 +3,7 @@ import { compose } from "recompose";
 import { useSelector, useDispatch } from "react-redux";
 
 import { withAuthorization } from "../Session";
+
 import GuestListItem from "./GuestListItem";
 import TableLoading from "../Loading/TableLoading";
 import * as ROLES from "../../constants/roles";
