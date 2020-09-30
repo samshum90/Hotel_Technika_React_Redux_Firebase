@@ -12,9 +12,13 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     flexDirection: "column",
   },
+  headTextField: {
+    marginRight: theme.spacing(1),
+    width: "90wv",
+  },
   textField: {
     marginRight: theme.spacing(1),
-    width: "25ch",
+    width: "15wv",
   },
   paper: {
     padding: theme.spacing(2),
@@ -79,7 +83,7 @@ function RoomForm(props) {
         <TextField
           id="filled-full-width"
           label="Room Name"
-          fullWidth
+          className={classes.headTextField}
           margin="normal"
           variant="filled"
           {...bindRoomName}

@@ -12,23 +12,27 @@ import Paper from "@material-ui/core/Paper";
 import RoomListItem from "./RoomListItem";
 import TableLoading from "../Loading/TableLoading";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
-});
+  container: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 function RoomList({ loading, rooms, onRemoveRoom, onEditRoom }) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.container}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Room Name</TableCell>
             <TableCell>Room Number</TableCell>
             <TableCell>Room Capacity</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

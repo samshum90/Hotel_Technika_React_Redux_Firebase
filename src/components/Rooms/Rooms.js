@@ -12,7 +12,6 @@ import RoomList from "./RoomList";
 
 function Rooms(props) {
   const [loading, setLoading] = useState(false);
-  // const { rooms } = props;
   const { rooms } = useSelector((state) => ({
     rooms: Object.keys(state.roomState.rooms || {}).map((key) => ({
       ...state.roomState.rooms[key],
@@ -27,9 +26,9 @@ function Rooms(props) {
     }
     onListenForRooms();
     return () => {
-      props.firebase.messages().off();
+      props.firebase.fetch("rooms").off();
     };
-  }, [rooms.length]);
+  }, []);
 
   function onListenForRooms() {
     setLoading(true);

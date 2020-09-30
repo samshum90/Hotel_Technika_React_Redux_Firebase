@@ -2,12 +2,22 @@ import React, { useState } from "react";
 
 import { useInput } from "../hooks/input-hook";
 
+import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
+const useStyles = makeStyles((theme) => ({
+  cell: {
+    display: "flex",
+    justifyContent: "space-around",
+  },
+}));
+
 function RoomListItem({ room, onRemoveRoom, onEditRoom }) {
+  const classes = useStyles();
+
   const [editMode, setEditMode] = useState(false);
   const { value: roomNumber, bind: bindRoomNumber } = useInput(
     `${room.roomNumber}`
@@ -39,7 +49,7 @@ function RoomListItem({ room, onRemoveRoom, onEditRoom }) {
       <TableCell>{room.roomName} </TableCell>
       <TableCell>{room.roomNumber} </TableCell>
       <TableCell>{room.roomCapacity} </TableCell>
-      <TableCell>
+      <TableCell className={classes.cell}>
         <Button
           color="secondary"
           variant="contained"
@@ -92,7 +102,7 @@ function RoomListItem({ room, onRemoveRoom, onEditRoom }) {
           {...bindRoomCapacity}
         />
       </TableCell>
-      <TableCell>
+      <TableCell className={classes.cell}>
         <Button
           color="secondary"
           variant="contained"

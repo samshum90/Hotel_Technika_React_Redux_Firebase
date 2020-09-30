@@ -12,6 +12,14 @@ const theme = createMuiTheme({
       contrastText: "#000000",
     },
   },
+  overrides: {
+    MuiTableRow: {
+      hover: true,
+    },
+    MuiTable: {
+      marginTop: "200px",
+    },
+  },
 });
 
 export default theme;

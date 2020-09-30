@@ -7,6 +7,7 @@ import * as ROUTES from "../../constants/routes";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
+  Paper,
   Radio,
   FormControl,
   FormLabel,
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     " & .MuiFormControl-root": {
       margin: theme.spacing(2),
     },
+  },
+  paper: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -117,94 +121,100 @@ function Register(props) {
 
   return (
     <Container maxWidth="md">
-      <h2>Registration</h2>
+      <Paper className={classes.paper}>
+        <h2>Registration</h2>
 
-      <form onSubmit={handleSubmit} className={classes.root}>
-        <div>
-          <TextField
-            name="firstName"
-            id="standard-basic"
-            label="First Name"
-            type="text"
-            {...bindFirstName}
-          />
-
-          <TextField
-            name="lastName"
-            id="standard-basic"
-            label="Last Name"
-            type="text"
-            {...bindLastName}
-          />
-        </div>
-        <TextField
-          name="dateOfBirth"
-          id="date"
-          label="Date Of Birth"
-          type="date"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          {...bindDateOfBirth}
-        />
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Gender</FormLabel>
-          <RadioGroup
-            row
-            aria-label="gender"
-            name="gender"
-            value={gender}
-            onChange={handleRadioChange}
-          >
-            <FormControlLabel
-              value="Female"
-              control={<Radio />}
-              label="Female"
+        <form onSubmit={handleSubmit} className={classes.root}>
+          <div>
+            <TextField
+              name="firstName"
+              id="standard-basic"
+              label="First Name"
+              type="text"
+              {...bindFirstName}
             />
-            <FormControlLabel value="Male" control={<Radio />} label="Male" />
-            <FormControlLabel value="Other" control={<Radio />} label="Other" />
-          </RadioGroup>
-        </FormControl>
-        <div>
-          <TextField
-            name="contactNumber"
-            id="standard-basic"
-            label="Contact Number"
-            type="tel"
-            {...bindContactNumber}
-          />
-          <TextField
-            name="email"
-            id="standard-basic"
-            label="Email"
-            type="email"
-            {...bindEmail}
-          />
-        </div>
-        <div>
-          <TextField
-            name="address"
-            id="standard-basic"
-            label="Address"
-            multiline
-            rows={4}
-            type="text"
-            {...bindAddress}
-          />
-          <TextField
-            name="postCode"
-            id="standard-basic"
-            label="Postcode"
-            type="text"
-            {...bindPostcode}
-          />
-        </div>
-        <Button color="secondary" variant="contained" type="submit">
-          Submit
-        </Button>
 
-        {error && <p>{error.message}</p>}
-      </form>
+            <TextField
+              name="lastName"
+              id="standard-basic"
+              label="Last Name"
+              type="text"
+              {...bindLastName}
+            />
+          </div>
+          <TextField
+            name="dateOfBirth"
+            id="date"
+            label="Date Of Birth"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            {...bindDateOfBirth}
+          />
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup
+              row
+              aria-label="gender"
+              name="gender"
+              value={gender}
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel
+                value="Female"
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel value="Male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="Other"
+                control={<Radio />}
+                label="Other"
+              />
+            </RadioGroup>
+          </FormControl>
+          <div>
+            <TextField
+              name="contactNumber"
+              id="standard-basic"
+              label="Contact Number"
+              type="tel"
+              {...bindContactNumber}
+            />
+            <TextField
+              name="email"
+              id="standard-basic"
+              label="Email"
+              type="email"
+              {...bindEmail}
+            />
+          </div>
+          <div>
+            <TextField
+              name="address"
+              id="standard-basic"
+              label="Address"
+              multiline
+              rows={4}
+              type="text"
+              {...bindAddress}
+            />
+            <TextField
+              name="postCode"
+              id="standard-basic"
+              label="Postcode"
+              type="text"
+              {...bindPostcode}
+            />
+          </div>
+          <Button color="secondary" variant="contained" type="submit">
+            Submit
+          </Button>
+
+          {error && <p>{error.message}</p>}
+        </form>
+      </Paper>
     </Container>
   );
 }
