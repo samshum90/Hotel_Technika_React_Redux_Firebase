@@ -71,8 +71,4 @@ function Rooms(props) {
 
 const condition = (authUser) => authUser && !!authUser.roles[ROLES.ADMIN];
 
-export default compose(
-  withFirebase,
-  withAuthorization(condition)
-  // connect(mapStateToProps)
-)(Rooms);
+export default compose(withFirebase, withAuthorization(condition))(Rooms);

@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  rooms: 1,
+  rooms: null,
 };
 
 const applySetRooms = (state, action) => ({

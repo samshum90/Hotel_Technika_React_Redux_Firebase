@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  guest: null,
+  guests: null,
 };
 
 const applySetGuests = (state, action) => ({

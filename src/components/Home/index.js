@@ -12,6 +12,7 @@ import booking from "./booking.jpg";
 import activities from "./activities.jpg";
 import staff from "./staff.jpg";
 import room from "./room.jpg";
+import guest from "./guest.jpg";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 
@@ -52,6 +53,13 @@ const images = [
     title: "Rooms",
     width: "31%",
     link: ROUTES.ROOM,
+    auth: ROLES.ADMIN,
+  },
+  {
+    url: guest,
+    title: "Guests",
+    width: "31%",
+    link: ROUTES.GUESTS,
     auth: ROLES.ADMIN,
   },
   {

@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
   },
 }));
 
@@ -64,26 +65,29 @@ function Guests(props) {
 
   return (
     <Container maxWidth="xl">
-      <TableContainer component={Paper} className={classes.container}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Full Name</TableCell>
-              <TableCell>Date Of Birth</TableCell>
-              <TableCell>Contact Number</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading && <TableLoading />}
-            {guests &&
-              guests.map((guest) => (
-                <GuestListItem key={guest.uid} guest={guest} />
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Paper className={classes.container}>
+        <h2>Guests</h2>
+        <TableContainer>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Full Name</TableCell>
+                <TableCell>Date Of Birth</TableCell>
+                <TableCell>Contact Number</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading && <TableLoading />}
+              {guests &&
+                guests.map((guest) => (
+                  <GuestListItem key={guest.uid} guest={guest} />
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
     </Container>
   );
 }

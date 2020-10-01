@@ -98,6 +98,10 @@ function GuestListItem(props) {
       });
   };
 
+  function onRemoveGuest(uid) {
+    props.firebase.fetchId("guests", uid).remove();
+  }
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -227,7 +231,7 @@ function GuestListItem(props) {
             Save
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={() => onRemoveGuest(guest.uid)}
             color="secondary"
             variant="contained"
             type="submit"
