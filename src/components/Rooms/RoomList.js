@@ -29,6 +29,7 @@ function RoomList({ loading, rooms, onRemoveRoom, onEditRoom }) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell></TableCell>
             <TableCell>Room Name</TableCell>
             <TableCell>Room Number</TableCell>
             <TableCell>Room Capacity</TableCell>

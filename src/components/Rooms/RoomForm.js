@@ -3,6 +3,9 @@ import { withFirebase } from "../Firebase";
 
 import { Paper, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import { useInput } from "../hooks/input-hook";
 
@@ -51,6 +54,13 @@ function RoomForm(props) {
     reset: resetRoomCapacity,
   } = useInput("");
 
+  const [amenities, setAmenities] = React.useState({
+    accessibility: false,
+    breakfast: false,
+    parking: false,
+    wifi: false,
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -58,6 +68,7 @@ function RoomForm(props) {
       roomName,
       roomNumber,
       roomCapacity,
+      amenities,
     };
 
     props.firebase
@@ -70,10 +81,20 @@ function RoomForm(props) {
         resetRoomName();
         resetRoomNumber();
         resetRoomCapacity();
+        setAmenities({
+          accessibility: false,
+          breakfast: false,
+          parking: false,
+          wifi: false,
+        });
       })
       .catch((error) => {
         setError({ error });
       });
+  };
+
+  const handleCheckboxChange = (event) => {
+    setAmenities({ ...amenities, [event.target.name]: event.target.checked });
   };
 
   return (
@@ -108,6 +129,48 @@ function RoomForm(props) {
             {...bindRoomCapacity}
           />
         </div>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={amenities.accessibility}
+                onChange={handleCheckboxChange}
+                name="accessibility"
+              />
+            }
+            label="Accessibility"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={amenities.breakfast}
+                onChange={handleCheckboxChange}
+                name="breakfast"
+              />
+            }
+            label="Breakfast"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={amenities.parking}
+                onChange={handleCheckboxChange}
+                name="parking"
+              />
+            }
+            label="Parking"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={amenities.wifi}
+                onChange={handleCheckboxChange}
+                name="wifi"
+              />
+            }
+            label="Wifi"
+          />
+        </FormGroup>
         <div>
           <Button
             className={classes.button}
