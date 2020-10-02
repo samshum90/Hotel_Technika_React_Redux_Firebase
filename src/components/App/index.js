@@ -7,13 +7,14 @@ import SignIn from "../SignIn";
 import PasswordForget from "../PasswordForget";
 import Home from "../Home";
 import Register from "../Register";
-import Booking from "../Booking";
+import Bookings from "../Booking";
 import Activities from "../Activities";
 import Staff from "../Home";
 import Account from "../Account";
 import Admin from "../Admin";
 import Room from "../Rooms";
 import Guests from "../Guests";
+import CreateBooking from "../Booking/CreateBooking";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
@@ -28,7 +29,8 @@ const App = () => (
     <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
     <Route path={ROUTES.HOME} component={Home} />
     <Route path={ROUTES.REGISTER} component={Register} />
-    <Route path={ROUTES.BOOKINGS} component={Booking} />
+    <Route exact path={ROUTES.BOOKINGS} component={Bookings} />
+    <Route exact path={ROUTES.CREATE_BOOKING} component={CreateBooking} />
     <Route path={ROUTES.ACTIVITIES} component={Activities} />
     <Route path={ROUTES.STAFF} component={Staff} />
     <Route path={ROUTES.ROOM} component={Room} />

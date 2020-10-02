@@ -22,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BookingListItem({ room }) {
+function BookingListItem(props) {
   const [open, setOpen] = useState(false);
+  const { room, createBooking } = props;
   const classes = useStyles();
 
   return (
@@ -46,7 +47,7 @@ function BookingListItem({ room }) {
             color="secondary"
             variant="contained"
             type="button"
-            // onClick={() => setOpen(!open)}
+            onClick={() => createBooking(room)}
             size="small"
           >
             Select

@@ -42,6 +42,11 @@ class Firebase {
   // DIY API
   saveData = (data, collection) => this.db.ref(`/${collection}`).push(data);
 
+  saveDataReturnKey = (data, collection) => {
+    const key = this.db.ref(`/${collection}`).push(data).key;
+    return key;
+  };
+
   fetch = (collection) => this.db.ref(`${collection}`);
 
   fetchId = (collection, uid) => this.db.ref(`${collection}/${uid}`);

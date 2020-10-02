@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BookingList({ loading, filteredRooms }) {
+function BookingList({ loading, filteredRooms, createBooking }) {
   const classes = useStyles();
 
   return (
@@ -29,6 +29,7 @@ function BookingList({ loading, filteredRooms }) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell></TableCell>
             <TableCell>Room Name</TableCell>
             <TableCell>Room Number</TableCell>
             <TableCell>Room Capacity</TableCell>
@@ -39,7 +40,11 @@ function BookingList({ loading, filteredRooms }) {
           {loading && <TableLoading />}
           {filteredRooms &&
             filteredRooms.map((room) => (
-              <BookingListItem key={room.uid} room={room} />
+              <BookingListItem
+                key={room.uid}
+                room={room}
+                createBooking={createBooking}
+              />
             ))}
         </TableBody>
       </Table>

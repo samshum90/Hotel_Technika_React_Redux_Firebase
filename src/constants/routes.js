@@ -8,6 +8,7 @@ export const ADMIN_DETAILS = "/admin/:id";
 export const PASSWORD_FORGET = "/pw-forget";
 export const REGISTER = "/register";
 export const BOOKINGS = "/bookings";
+export const CREATE_BOOKING = "/bookings/:id";
 export const ACTIVITIES = "/activities";
 export const STAFF = "/staff";
 export const ROOM = "/rooms";

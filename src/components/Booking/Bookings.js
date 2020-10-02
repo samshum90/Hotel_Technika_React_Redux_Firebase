@@ -7,6 +7,7 @@ import { withFirebase } from "../Firebase";
 import { withAuthorization } from "../Session";
 
 import * as ROLES from "../../constants/roles";
+import * as ROUTES from "../../constants/routes";
 import BookingForm from "./BookingForm";
 import BookingList from "./BookingList";
 
@@ -24,6 +25,9 @@ function Bookings(props) {
     })),
   }));
   const [filteredRooms, setFilteredRooms] = useState("");
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
+  const [guests, setGuests] = useState([]);
 
   useEffect(() => {
     if (!bookings.length) {
@@ -55,10 +59,31 @@ function Bookings(props) {
     dispatch({ type: "ROOMS_SET", rooms });
   }
 
+  function createBooking(room) {
+    const booking = {
+      checkInDate,
+      checkOutDate,
+      room,
+      guests,
+    };
+    props.firebase.saveData(booking, "bookings").then((booking) => {
+      props.history.push(`${ROUTES.BOOKINGS}/${booking.key}`);
+    });
+  }
+
   return (
     <Container maxWidth="xl">
-      <BookingForm setFilteredRooms={setFilteredRooms} rooms={rooms} />
-      <BookingList loading={loading} filteredRooms={filteredRooms} />
+      <BookingForm
+        setFilteredRooms={setFilteredRooms}
+        setCheckInDate={setCheckInDate}
+        setCheckOutDate={setCheckOutDate}
+        rooms={rooms}
+      />
+      <BookingList
+        loading={loading}
+        filteredRooms={filteredRooms}
+        createBooking={createBooking}
+      />
     </Container>
   );
 }

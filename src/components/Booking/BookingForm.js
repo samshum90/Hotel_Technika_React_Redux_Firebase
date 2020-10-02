@@ -26,11 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BookingForm({ setFilteredRooms, rooms, firebase }) {
+function BookingForm({
+  setFilteredRooms,
+  rooms,
+  setCheckInDate,
+  setCheckOutDate,
+}) {
   const classes = useStyles();
 
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkOutDate, setCheckOutDate] = useState("");
   const [numberOfPeople, setNumberOfPeople] = useState("");
 
   const handleSubmit = (event) => {
@@ -46,7 +49,7 @@ function BookingForm({ setFilteredRooms, rooms, firebase }) {
 
   return (
     <Paper className={classes.paper}>
-      <h2>Make a Booking</h2>
+      <h2>Find a Room</h2>
       <form className={classes.root} onSubmit={handleSubmit}>
         <div>
           <TextField

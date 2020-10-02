@@ -117,7 +117,9 @@ function RoomListItem({ room, onRemoveRoom, onEditRoom }) {
               <Table size="small">
                 <TableBody>
                   <TableRow>
-                    <RoomIcons amenities={room.amenities} />
+                    <TableCell>
+                      <RoomIcons amenities={room.amenities} />
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
