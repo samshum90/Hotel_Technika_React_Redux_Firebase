@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { RoomIcons } from "../Rooms";
+import { useSelector } from "react-redux";
 
 import {
   Grid,
@@ -54,19 +55,31 @@ function CreateBookingEdit({
   checkOutDate,
   setCheckInDate,
   setCheckOutDate,
+  setRoom,
+  room,
 }) {
   const classes = useStyles();
+  const { rooms } = useSelector((state) => ({
+    rooms: Object.keys(state.roomState.rooms || {}).map((key) => ({
+      ...state.roomState.rooms[key],
+      uid: key,
+    })),
+  }));
 
-  function inputValues(guest) {
-    return (
-      guest.firstName +
-      " " +
-      guest.lastName +
-      " " +
-      guest.dateOfBirth +
-      " " +
-      guest.email
-    );
+  function selectorOptions(guest) {
+    if (!!guest.lastName) {
+      return (
+        guest.firstName +
+        " " +
+        guest.lastName +
+        " " +
+        guest.dateOfBirth +
+        " " +
+        guest.email
+      );
+    } else {
+      return guest.firstName;
+    }
   }
 
   return (
@@ -120,15 +133,7 @@ function CreateBookingEdit({
                     <Autocomplete
                       id="combo-box-demo"
                       options={guests}
-                      getOptionLabel={(guest) =>
-                        guest.firstName +
-                        " " +
-                        guest.lastName +
-                        " " +
-                        guest.dateOfBirth +
-                        " " +
-                        guest.email
-                      }
+                      getOptionLabel={(guest) => selectorOptions(guest)}
                       size="small"
                       onChange={(event, guest) => handleGuest(index, guest)}
                       value={selectedGuest}
@@ -167,10 +172,27 @@ function CreateBookingEdit({
           </Grid>
           <Grid item xs={6}>
             <Card>
-              <CardContent>
-                <Typography>Room Name: {booking.room.roomName}</Typography>
-                <RoomIcons amenities={booking.room.amenities} />
-              </CardContent>
+              {room && (
+                <CardContent>
+                  <Autocomplete
+                    id="combo-box-demo"
+                    options={rooms}
+                    getOptionLabel={(room) =>
+                      room.roomName + " Capacity:" + room.roomCapacity
+                    }
+                    size="small"
+                    onChange={(event, room) => setRoom(room)}
+                    value={room}
+                    getOptionSelected={(option, value) =>
+                      option.roomName === value.roomName
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} variant="outlined" />
+                    )}
+                  />
+                  <RoomIcons amenities={room.amenities} />
+                </CardContent>
+              )}
             </Card>
           </Grid>
           <Grid item xs={12}>

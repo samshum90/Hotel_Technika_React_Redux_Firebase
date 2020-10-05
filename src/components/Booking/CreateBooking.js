@@ -122,6 +122,8 @@ function CreateBooking(props) {
           handleGuest={handleGuest}
           handleDeleteGuest={handleDeleteGuest}
           state={state}
+          setRoom={setRoom}
+          room={room}
         />
       ) : (
         <CreateBookingNew

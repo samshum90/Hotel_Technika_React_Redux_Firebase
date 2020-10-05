@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useInput } from "../hooks/input-hook";
 import RoomIcons from "./RoomIcons";
@@ -49,6 +49,13 @@ function RoomListItem({ room, onRemoveRoom, onEditRoom }) {
     wifi: false,
   });
 
+  useEffect(() => {
+    setAmenitiesState();
+  }, []);
+
+  function setAmenitiesState() {
+    setAmenities({ ...room.amenities });
+  }
   function onToggleEditMode() {
     setEditMode(!editMode);
   }
