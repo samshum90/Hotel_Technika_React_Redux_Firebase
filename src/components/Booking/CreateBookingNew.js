@@ -42,13 +42,16 @@ function CreateBookingNew({
   booking,
   guests,
   onToggleEditMode,
-  loading,
   error,
   handleSubmit,
   addGuest,
   handleGuest,
   handleDeleteGuest,
   state,
+  checkInDate,
+  checkOutDate,
+  room,
+  numberOfGuests,
 }) {
   const classes = useStyles();
 
@@ -70,11 +73,6 @@ function CreateBookingNew({
 
   return (
     <>
-      {loading && (
-        <Paper className={classes.paper}>
-          <p>Loading...</p>
-        </Paper>
-      )}
       {booking && (
         <Grid container spacing={3} component={Paper} className={classes.root}>
           <Grid item xs={12}>
@@ -83,8 +81,9 @@ function CreateBookingNew({
           <Grid item xs={6}>
             <Card>
               <CardContent>
-                <Typography>Check In Date: {booking.checkInDate}</Typography>
-                <Typography>Check Out Date: {booking.checkOutDate}</Typography>
+                <Typography>Check In Date: {checkInDate}</Typography>
+                <Typography>Check Out Date: {checkOutDate}</Typography>
+                <Typography> Number of Guests: {numberOfGuests}</Typography>
               </CardContent>
             </Card>
             <Card className={classes.card}>
@@ -133,10 +132,12 @@ function CreateBookingNew({
           </Grid>
           <Grid item xs={6}>
             <Card>
-              <CardContent>
-                <Typography>Room Name: {booking.room.roomName}</Typography>
-                <RoomIcons amenities={booking.room.amenities} />
-              </CardContent>
+              {room && (
+                <CardContent>
+                  <Typography>Room Name: {room.roomName}</Typography>
+                  {/* <RoomIcons amenities={room.amenities} /> */}
+                </CardContent>
+              )}
             </Card>
           </Grid>
           <Grid item xs={12}>

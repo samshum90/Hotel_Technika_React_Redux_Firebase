@@ -31,17 +31,17 @@ function BookingForm({
   rooms,
   setCheckInDate,
   setCheckOutDate,
+  numberOfGuests,
+  setNumberOfGuests,
 }) {
   const classes = useStyles();
-
-  const [numberOfPeople, setNumberOfPeople] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     let filteredRooms = rooms;
-    if (numberOfPeople !== "") {
+    if (numberOfGuests !== "") {
       filteredRooms = rooms.filter(
-        (room) => room.roomCapacity === numberOfPeople
+        (room) => room.roomCapacity === numberOfGuests
       );
     }
     setFilteredRooms(filteredRooms);
@@ -83,7 +83,7 @@ function BookingForm({
             type="number"
             variant="filled"
             className={classes.textField}
-            onChange={(e) => setNumberOfPeople(e.target.value)}
+            onChange={(e) => setNumberOfGuests(e.target.value)}
           />
           <Button
             className={classes.button}

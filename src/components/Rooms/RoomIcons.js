@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import AccessibleIcon from "@material-ui/icons/Accessible";
 import FreeBreakfastIcon from "@material-ui/icons/FreeBreakfast";
@@ -6,9 +6,6 @@ import LocalParkingIcon from "@material-ui/icons/LocalParking";
 import WifiIcon from "@material-ui/icons/Wifi";
 import Tooltip from "@material-ui/core/Tooltip";
 function RoomIcons({ amenities }) {
-  useEffect(() => {
-    console.log("room changed");
-  }, [amenities]);
   return (
     <>
       {amenities.accessibility && (

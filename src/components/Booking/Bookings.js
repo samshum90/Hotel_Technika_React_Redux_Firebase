@@ -26,6 +26,8 @@ function Bookings(props) {
   const [filteredRooms, setFilteredRooms] = useState("");
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
+  const [reserved] = useState(false);
+  const [numberOfGuests, setNumberOfGuests] = useState("");
 
   useEffect(() => {
     if (!bookings.length) {
@@ -38,6 +40,8 @@ function Bookings(props) {
       checkInDate,
       checkOutDate,
       room,
+      reserved,
+      numberOfGuests,
     };
     props.firebase.saveData(booking, "bookings").then((booking) => {
       props.history.push(`${ROUTES.BOOKINGS}/${booking.key}`);
@@ -51,6 +55,8 @@ function Bookings(props) {
         setCheckInDate={setCheckInDate}
         setCheckOutDate={setCheckOutDate}
         rooms={rooms}
+        numberOfGuests={numberOfGuests}
+        setNumberOfGuests={setNumberOfGuests}
       />
       <BookingList
         loading={loading}

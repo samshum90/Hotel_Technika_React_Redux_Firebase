@@ -44,7 +44,6 @@ function CreateBookingEdit({
   booking,
   guests,
   onToggleEditMode,
-  loading,
   error,
   handleSubmit,
   addGuest,
@@ -57,6 +56,8 @@ function CreateBookingEdit({
   setCheckOutDate,
   setRoom,
   room,
+  numberOfGuests,
+  setNumberOfGuests,
 }) {
   const classes = useStyles();
   const { rooms } = useSelector((state) => ({
@@ -84,11 +85,6 @@ function CreateBookingEdit({
 
   return (
     <>
-      {loading && (
-        <Paper className={classes.paper}>
-          <p>Loading...</p>
-        </Paper>
-      )}
       {booking && (
         <Grid container spacing={3} component={Paper} className={classes.root}>
           <Grid item xs={12}>
@@ -122,6 +118,19 @@ function CreateBookingEdit({
                     shrink: true,
                   }}
                   onChange={(e) => setCheckOutDate(e.target.value)}
+                />
+                <TextField
+                  name="numberOfPeople"
+                  id="filled-margin-none"
+                  label="Number Of People"
+                  type="number"
+                  variant="filled"
+                  className={classes.textField}
+                  onChange={(e) => setNumberOfGuests(e.target.value)}
+                  value={numberOfGuests}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </CardContent>
             </Card>

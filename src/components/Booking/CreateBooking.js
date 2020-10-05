@@ -4,10 +4,18 @@ import { useParams } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import CreateBookingEdit from "./CreateBookingEdit";
 import CreateBookingNew from "./CreateBookingNew";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { Container } from "@material-ui/core";
+import { Container, Paper } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(2),
+  },
+}));
 
 function CreateBooking(props) {
+  const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState("");
@@ -16,6 +24,8 @@ function CreateBooking(props) {
   });
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
+  const [reserved, setReserved] = useState(false);
+  const [numberOfGuests, setNumberOfGuests] = useState("");
   const [room, setRoom] = useState("");
   const { id } = useParams();
   const { booking, guests } = useSelector((state) => ({
@@ -35,16 +45,21 @@ function CreateBooking(props) {
     if (!booking) {
       setLoading(true);
     }
-    if (booking) {
+    if (!!booking) {
       settingState();
-      setLoading(false);
     }
   }, [booking]);
 
+  useEffect(() => {}, []);
+
   function settingState() {
-    setCheckInDate(booking.checkInDate);
-    setCheckOutDate(booking.checkOutDate);
-    setRoom(booking.room);
+    if (!checkInDate) {
+      setCheckInDate(booking.checkInDate);
+      setCheckOutDate(booking.checkOutDate);
+      setRoom(booking.room);
+      setRoom(booking.numberOfGuests);
+      setLoading(false);
+    }
   }
   function onToggleEditMode() {
     setEditMode(!editMode);
@@ -81,13 +96,14 @@ function CreateBooking(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-
+    setReserved(true);
     const guests = state.selectedGuests;
     const editedBooking = {
       guests,
       checkInDate,
       checkOutDate,
       room,
+      reserved,
     };
 
     props.firebase
@@ -106,13 +122,17 @@ function CreateBooking(props) {
 
   return (
     <Container maxWidth="xl">
+      {loading && (
+        <Paper className={classes.paper}>
+          <p>Loading...</p>
+        </Paper>
+      )}
       {editMode ? (
         <CreateBookingEdit
           booking={booking}
           guests={guests}
           onToggleEditMode={onToggleEditMode}
           error={error}
-          loading={loading}
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
           setCheckInDate={setCheckInDate}
@@ -124,6 +144,8 @@ function CreateBooking(props) {
           state={state}
           setRoom={setRoom}
           room={room}
+          numberOfGuests={numberOfGuests}
+          setNumberOfGuests={setNumberOfGuests}
         />
       ) : (
         <CreateBookingNew
@@ -131,12 +153,15 @@ function CreateBooking(props) {
           guests={guests}
           onToggleEditMode={onToggleEditMode}
           error={error}
-          loading={loading}
           handleSubmit={handleSubmit}
           addGuest={addGuest}
           handleGuest={handleGuest}
           handleDeleteGuest={handleDeleteGuest}
           state={state}
+          checkInDate={checkInDate}
+          checkOutDate={checkOutDate}
+          room={room}
+          numberOfGuests={numberOfGuests}
         />
       )}
     </Container>
