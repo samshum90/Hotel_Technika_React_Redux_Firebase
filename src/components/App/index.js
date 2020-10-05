@@ -23,7 +23,18 @@ import { CreateBooking } from "../Booking";
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
 
+import { makeStyles } from "@material-ui/core/styles";
+import { Container } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.default,
+    height: "100%",
+  },
+}));
+
 function App(props) {
+  const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
     onListenForState();
@@ -56,24 +67,26 @@ function App(props) {
   }
 
   return (
-    <Router>
-      <Navbar />
+    <Container className={classes.root} maxWidth="xl">
+      <Router>
+        <Navbar />
 
-      <Route exact path={ROUTES.LANDING} component={Landing} />
-      <Route path={ROUTES.SIGN_UP} component={SignUp} />
-      <Route path={ROUTES.SIGN_IN} component={SignIn} />
-      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
-      <Route path={ROUTES.HOME} component={Home} />
-      <Route path={ROUTES.REGISTER} component={Register} />
-      <Route exact path={ROUTES.BOOKINGS} component={Bookings} />
-      <Route exact path={ROUTES.CREATE_BOOKING} component={CreateBooking} />
-      <Route path={ROUTES.ACTIVITIES} component={Activities} />
-      <Route path={ROUTES.STAFF} component={Staff} />
-      <Route path={ROUTES.ROOM} component={Room} />
-      <Route path={ROUTES.ACCOUNT} component={Account} />
-      <Route path={ROUTES.ADMIN} component={Admin} />
-      <Route path={ROUTES.GUESTS} component={Guests} />
-    </Router>
+        <Route exact path={ROUTES.LANDING} component={Landing} />
+        <Route path={ROUTES.SIGN_UP} component={SignUp} />
+        <Route path={ROUTES.SIGN_IN} component={SignIn} />
+        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+        <Route path={ROUTES.HOME} component={Home} />
+        <Route path={ROUTES.REGISTER} component={Register} />
+        <Route exact path={ROUTES.BOOKINGS} component={Bookings} />
+        <Route exact path={ROUTES.CREATE_BOOKING} component={CreateBooking} />
+        <Route path={ROUTES.ACTIVITIES} component={Activities} />
+        <Route path={ROUTES.STAFF} component={Staff} />
+        <Route path={ROUTES.ROOM} component={Room} />
+        <Route path={ROUTES.ACCOUNT} component={Account} />
+        <Route path={ROUTES.ADMIN} component={Admin} />
+        <Route path={ROUTES.GUESTS} component={Guests} />
+      </Router>
+    </Container>
   );
 }
 

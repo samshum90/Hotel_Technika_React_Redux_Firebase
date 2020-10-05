@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { compose } from "recompose";
 import { Container } from "@material-ui/core";
 
@@ -13,7 +13,6 @@ import BookingList from "./BookingList";
 
 function Bookings(props) {
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const { bookings, rooms } = useSelector((state) => ({
     bookings: Object.keys(state.bookingState.bookings || {}).map((key) => ({
       ...state.bookingState.bookings[key],
@@ -27,44 +26,18 @@ function Bookings(props) {
   const [filteredRooms, setFilteredRooms] = useState("");
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
-  const [guests, setGuests] = useState([]);
 
   useEffect(() => {
     if (!bookings.length) {
       setLoading(true);
     }
-    onListenForBookingsAndRooms();
-    return () => {
-      props.firebase.fetch("bookings").off();
-      props.firebase.fetch("rooms").off();
-    };
   }, []);
-
-  function onListenForBookingsAndRooms() {
-    setLoading(true);
-
-    props.firebase.fetch("bookings").on("value", (snapshot) => {
-      onSetBookings(snapshot.val());
-    });
-    props.firebase.fetch("rooms").on("value", (snapshot) => {
-      onSetRooms(snapshot.val());
-    });
-    setLoading(false);
-  }
-
-  function onSetBookings(bookings) {
-    dispatch({ type: "BOOKINGS_SET", bookings });
-  }
-  function onSetRooms(rooms) {
-    dispatch({ type: "ROOMS_SET", rooms });
-  }
 
   function createBooking(room) {
     const booking = {
       checkInDate,
       checkOutDate,
       room,
-      guests,
     };
     props.firebase.saveData(booking, "bookings").then((booking) => {
       props.history.push(`${ROUTES.BOOKINGS}/${booking.key}`);
