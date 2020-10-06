@@ -220,7 +220,7 @@ function CreateBookingEdit({
               variant="contained"
               type="button"
               size="small"
-              onClick={() => handleSubmit}
+              onClick={(e) => handleSubmit(e)}
             >
               Submit
             </Button>

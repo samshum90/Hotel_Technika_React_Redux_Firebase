@@ -135,7 +135,7 @@ function CreateBookingNew({
               {room && (
                 <CardContent>
                   <Typography>Room Name: {room.roomName}</Typography>
-                  {/* <RoomIcons amenities={room.amenities} /> */}
+                  <RoomIcons amenities={room.amenities} />
                 </CardContent>
               )}
             </Card>

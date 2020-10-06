@@ -8,6 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Container, Paper } from "@material-ui/core";
 
+import * as ROUTES from "../../constants/routes";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -57,7 +59,7 @@ function CreateBooking(props) {
       setCheckInDate(booking.checkInDate);
       setCheckOutDate(booking.checkOutDate);
       setRoom(booking.room);
-      setRoom(booking.numberOfGuests);
+      setNumberOfGuests(booking.numberOfGuests);
       setLoading(false);
     }
   }
@@ -104,6 +106,7 @@ function CreateBooking(props) {
       checkOutDate,
       room,
       reserved,
+      numberOfGuests,
     };
 
     props.firebase
@@ -111,9 +114,10 @@ function CreateBooking(props) {
       .set({ ...editedBooking })
       .then(() => {
         alert(
-          `Booking made for the ${checkInDate} to the ${checkOutDate} in the ${room.name} room for ${state.selectedGuests.length} guests.
+          `Booking made for the ${checkInDate} to the ${checkOutDate} in the ${room.roomName} room for ${state.selectedGuests.length} guests.
           Booking confirmation number ${booking.uid}`
         );
+        props.history.push(ROUTES.HOME);
       })
       .catch((error) => {
         setError({ error });
