@@ -18,6 +18,12 @@ const theme = createMuiTheme({
       grid: "#F5F5F6",
     },
   },
+  overrides: {
+    MuiTableCell: {
+      root: {},
+      hover: {},
+    },
+  },
 });
 
 export default theme;

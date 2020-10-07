@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { withAuthorization } from "../Session";
 
-import GuestListItem from "./GuestListItem";
+import ReservationListItem from "./ReservationListItem";
 import TableLoading from "../Loading/TableLoading";
 import * as ROLES from "../../constants/roles";
 
@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Guests(props) {
+function Reservations(props) {
   const [loading, setLoading] = useState(false);
-  const { guests } = useSelector((state) => ({
-    guests: Object.keys(state.guestState.guests || {}).map((key) => ({
-      ...state.guestState.guests[key],
+  const { bookings } = useSelector((state) => ({
+    bookings: Object.keys(state.bookingState.bookings || {}).map((key) => ({
+      ...state.bookingState.bookings[key],
       uid: key,
     })),
   }));
@@ -40,11 +40,11 @@ function Guests(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    if (!guests.length) {
+    if (!bookings.length) {
       setLoading(true);
     }
     setLoading(false);
-  }, [guests]);
+  }, [bookings]);
 
   return (
     <Container maxWidth="xl">
@@ -54,18 +54,23 @@ function Guests(props) {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Full Name</TableCell>
-                <TableCell>Date Of Birth</TableCell>
-                <TableCell>Contact Number</TableCell>
-                <TableCell>Email</TableCell>
+                <TableCell>Booking Ref</TableCell>
+                <TableCell>Check In Date</TableCell>
+                <TableCell>Check Out Date</TableCell>
+                <TableCell>Number of Guests</TableCell>
+                <TableCell>Room Name</TableCell>
+                <TableCell>Booking Status</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {loading && <TableLoading />}
-              {guests &&
-                guests.map((guest) => (
-                  <GuestListItem key={guest.uid} guest={guest} />
+              {bookings &&
+                bookings.map((reservation) => (
+                  <ReservationListItem
+                    key={reservation.uid}
+                    reservation={reservation}
+                  />
                 ))}
             </TableBody>
           </Table>
@@ -74,7 +79,4 @@ function Guests(props) {
     </Container>
   );
 }
-
-const condition = (authUser) => authUser && !!authUser.roles[ROLES.ADMIN];
-
-export default compose(withAuthorization(condition))(Guests);
+export default Reservations;

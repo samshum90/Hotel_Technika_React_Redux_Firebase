@@ -13,3 +13,4 @@ export const ACTIVITIES = "/activities";
 export const STAFF = "/staff";
 export const ROOM = "/rooms";
 export const GUESTS = "/guests";
+export const RESERVATIONS = "/reservations";

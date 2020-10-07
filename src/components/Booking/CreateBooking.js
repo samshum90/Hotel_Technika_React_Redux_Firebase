@@ -21,15 +21,15 @@ function CreateBooking(props) {
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState("");
-  const [state, setState] = useState({
-    selectedGuests: [{ firstName: "guest 1" }],
-  });
+  const [selectedGuests, setSelectedGuests] = useState([
+    { firstName: "guest 1" },
+  ]);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
-  const [reserved, setReserved] = useState(false);
   const [numberOfGuests, setNumberOfGuests] = useState("");
   const [room, setRoom] = useState("");
   const { id } = useParams();
+  const [status, setStatus] = useState("");
   const { booking, guests } = useSelector((state) => ({
     booking: Object.keys(state.bookingState.bookings || {})
       .map((key) => ({
@@ -61,6 +61,7 @@ function CreateBooking(props) {
       setRoom(booking.room);
       setNumberOfGuests(booking.numberOfGuests);
       setLoading(false);
+      setStatus(booking.status);
     }
   }
   function onToggleEditMode() {
@@ -68,44 +69,44 @@ function CreateBooking(props) {
   }
 
   function handleGuest(i, selectedGuest) {
-    let selectedGuests = [...state.selectedGuests];
+    let selectedGuests = [...selectedGuests];
     selectedGuests[i] = selectedGuest;
-    setState({
-      selectedGuests,
+    setSelectedGuests({
+      ...selectedGuests,
     });
   }
 
   const handleDeleteGuest = (i) => (e) => {
     e.preventDefault();
     let selectedGuests = [
-      ...state.selectedGuests.slice(0, i),
-      ...state.selectedGuests.slice(i + 1),
+      ...selectedGuests.slice(0, i),
+      ...selectedGuests.slice(i + 1),
     ];
-    setState({
-      selectedGuests,
+    setSelectedGuests({
+      ...selectedGuests,
     });
   };
 
   const addGuest = (e) => {
     e.preventDefault();
-    let guestNumber = state.selectedGuests.length + 1;
+    let guestNumber = selectedGuests.length + 1;
     let newInput = { firstName: `guest ${guestNumber}` };
-    let selectedGuests = state.selectedGuests.concat([newInput]);
-    setState({
+    let selectedGuests = selectedGuests.concat([newInput]);
+    setSelectedGuests({
       selectedGuests,
     });
   };
 
   function handleSubmit(event) {
     event.preventDefault();
-    setReserved(true);
-    const guests = state.selectedGuests;
+    setStatus("Booked");
+    const guests = selectedGuests;
     const editedBooking = {
       guests,
       checkInDate,
       checkOutDate,
       room,
-      reserved,
+      status,
       numberOfGuests,
     };
 
@@ -114,7 +115,7 @@ function CreateBooking(props) {
       .set({ ...editedBooking })
       .then(() => {
         alert(
-          `Booking made for the ${checkInDate} to the ${checkOutDate} in the ${room.roomName} room for ${state.selectedGuests.length} guests.
+          `Booking made for the ${checkInDate} to the ${checkOutDate} in the ${room.roomName} room for ${selectedGuests.length} guests.
           Booking confirmation number ${booking.uid}`
         );
         props.history.push(ROUTES.HOME);
@@ -145,11 +146,12 @@ function CreateBooking(props) {
           addGuest={addGuest}
           handleGuest={handleGuest}
           handleDeleteGuest={handleDeleteGuest}
-          state={state}
+          selectedGuests={selectedGuests}
           setRoom={setRoom}
           room={room}
           numberOfGuests={numberOfGuests}
           setNumberOfGuests={setNumberOfGuests}
+          status={status}
         />
       ) : (
         <CreateBookingNew
@@ -161,7 +163,7 @@ function CreateBooking(props) {
           addGuest={addGuest}
           handleGuest={handleGuest}
           handleDeleteGuest={handleDeleteGuest}
-          state={state}
+          selectedGuests={selectedGuests}
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
           room={room}

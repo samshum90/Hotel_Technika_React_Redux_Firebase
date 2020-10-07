@@ -49,7 +49,7 @@ function CreateBookingEdit({
   addGuest,
   handleGuest,
   handleDeleteGuest,
-  state,
+  selectedGuests,
   checkInDate,
   checkOutDate,
   setCheckInDate,
@@ -58,6 +58,7 @@ function CreateBookingEdit({
   room,
   numberOfGuests,
   setNumberOfGuests,
+  reservationMode,
 }) {
   const classes = useStyles();
   const { rooms } = useSelector((state) => ({
@@ -88,7 +89,9 @@ function CreateBookingEdit({
       {booking && (
         <Grid container spacing={3} component={Paper} className={classes.root}>
           <Grid item xs={12}>
-            <Typography variant="h4">Confirm details</Typography>
+            {!reservationMode ? (
+              <Typography variant="h4">Confirm details</Typography>
+            ) : null}
           </Grid>
           <Grid item xs={6}>
             <Card>
@@ -137,7 +140,7 @@ function CreateBookingEdit({
             <Card className={classes.card}>
               <CardContent>
                 <Typography>Select Guests:</Typography>
-                {state.selectedGuests.map((selectedGuest, index) => (
+                {selectedGuests.map((selectedGuest, index) => (
                   <Grid key={index} item xs={12}>
                     <Autocomplete
                       id="combo-box-demo"
@@ -204,29 +207,31 @@ function CreateBookingEdit({
               )}
             </Card>
           </Grid>
-          <Grid item xs={12}>
-            <Button
-              color="secondary"
-              variant="contained"
-              type="button"
-              onClick={() => onToggleEditMode()}
-              size="small"
-            >
-              edit
-            </Button>
+          {!reservationMode ? (
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                type="button"
+                onClick={() => onToggleEditMode()}
+                size="small"
+              >
+                Cancel
+              </Button>
 
-            <Button
-              color="secondary"
-              variant="contained"
-              type="button"
-              size="small"
-              onClick={(e) => handleSubmit(e)}
-            >
-              Submit
-            </Button>
+              <Button
+                color="secondary"
+                variant="contained"
+                type="button"
+                size="small"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Submit
+              </Button>
 
-            {error && <p>{error.message}</p>}
-          </Grid>
+              {error && <p>{error.message}</p>}
+            </Grid>
+          ) : null}
         </Grid>
       )}
     </>

@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
   },
+  row: {
+    cursor: "pointer",
+  },
 }));
 
 function GuestListItem(props) {
@@ -111,12 +114,22 @@ function GuestListItem(props) {
 
   return (
     <>
-      <TableRow hover onClick={handleClickOpen}>
+      <TableRow hover onClick={handleClickOpen} className={classes.row}>
         <TableCell>{firstName + " " + lastName}</TableCell>
         <TableCell>{dateOfBirth}</TableCell>
         <TableCell>{contactNumber}</TableCell>
         <TableCell>{email}</TableCell>
-        <TableCell></TableCell>
+        <TableCell>
+          <Button
+            color="secondary"
+            variant="contained"
+            type="button"
+            onClick={() => setOpen(true)}
+            size="small"
+          >
+            Edit
+          </Button>
+        </TableCell>
       </TableRow>
       <Dialog
         open={open}

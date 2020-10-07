@@ -47,7 +47,7 @@ function CreateBookingNew({
   addGuest,
   handleGuest,
   handleDeleteGuest,
-  state,
+  selectedGuests,
   checkInDate,
   checkOutDate,
   room,
@@ -89,7 +89,7 @@ function CreateBookingNew({
             <Card className={classes.card}>
               <CardContent>
                 <Typography>Select Guests:</Typography>
-                {state.selectedGuests.map((selectedGuest, index) => (
+                {selectedGuests.map((selectedGuest, index) => (
                   <Grid key={index} item xs={12}>
                     <Autocomplete
                       id="combo-box-demo"

@@ -18,6 +18,7 @@ import Account from "../Account";
 import Admin from "../Admin";
 import Room from "../Rooms";
 import Guests from "../Guests";
+import Reservations from "../Reservation";
 import { CreateBooking } from "../Booking";
 
 import * as ROUTES from "../../constants/routes";
@@ -41,6 +42,7 @@ function App(props) {
     return () => {
       props.firebase.fetch("bookings").off();
       props.firebase.fetch("rooms").off();
+      props.firebase.fetch("guests").off();
     };
   }, []);
 
@@ -79,6 +81,7 @@ function App(props) {
         <Route path={ROUTES.REGISTER} component={Register} />
         <Route exact path={ROUTES.BOOKINGS} component={Bookings} />
         <Route exact path={ROUTES.CREATE_BOOKING} component={CreateBooking} />
+        <Route path={ROUTES.RESERVATIONS} component={Reservations} />
         <Route path={ROUTES.ACTIVITIES} component={Activities} />
         <Route path={ROUTES.STAFF} component={Staff} />
         <Route path={ROUTES.ROOM} component={Room} />

@@ -26,7 +26,7 @@ function Bookings(props) {
   const [filteredRooms, setFilteredRooms] = useState("");
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
-  const [reserved] = useState(false);
+  const [status] = useState("Started");
   const [numberOfGuests, setNumberOfGuests] = useState("");
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function Bookings(props) {
       checkInDate,
       checkOutDate,
       room,
-      reserved,
+      status,
       numberOfGuests,
     };
     props.firebase.saveData(booking, "bookings").then((booking) => {
