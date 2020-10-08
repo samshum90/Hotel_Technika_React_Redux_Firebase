@@ -59,6 +59,7 @@ function CreateBookingEdit({
   numberOfGuests,
   setNumberOfGuests,
   reservationMode,
+  status,
 }) {
   const classes = useStyles();
   const { rooms } = useSelector((state) => ({
@@ -207,6 +208,23 @@ function CreateBookingEdit({
               )}
             </Card>
           </Grid>
+          {!reservationMode ? (
+            <Grid item xs={6}>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={status}
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          ) : null}
           {!reservationMode ? (
             <Grid item xs={12}>
               <Button

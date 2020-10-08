@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Reservations(props) {
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { bookings } = useSelector((state) => ({
     bookings: Object.keys(state.bookingState.bookings || {}).map((key) => ({
@@ -49,7 +50,8 @@ function Reservations(props) {
   return (
     <Container maxWidth="xl">
       <Paper className={classes.container}>
-        <h2>Guests</h2>
+        <h2>Reservations</h2>
+        {error && <p>{error.message}</p>}
         <TableContainer>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>

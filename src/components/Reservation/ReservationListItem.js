@@ -43,8 +43,7 @@ function ReservationListItem(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
-  const [error, setError] = useState("");
-  const { reservation } = props;
+  const { reservation, error, setError } = props;
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [reserved] = useState("");
@@ -163,7 +162,6 @@ function ReservationListItem(props) {
 
   const checkIn = () => {
     setStatus("Checked In");
-
     props.firebase
       .fetchId("bookings", reservation.uid)
       .update({ status })
@@ -215,11 +213,11 @@ function ReservationListItem(props) {
     <>
       <TableRow hover className={classes.row}>
         <TableCell>{reservation.uid}</TableCell>
-        <TableCell>{reservation.checkInDate}</TableCell>
-        <TableCell>{reservation.checkOutDate}</TableCell>
-        <TableCell>{reservation.numberOfGuests}</TableCell>
-        <TableCell>{reservation.room.roomName}</TableCell>
-        <TableCell>{reservation.status}</TableCell>
+        <TableCell>{checkInDate}</TableCell>
+        <TableCell>{checkOutDate}</TableCell>
+        <TableCell>{numberOfGuests}</TableCell>
+        <TableCell>{room.roomName}</TableCell>
+        <TableCell>{status}</TableCell>
         <TableCell>
           {ConditionalButtons()}
 
