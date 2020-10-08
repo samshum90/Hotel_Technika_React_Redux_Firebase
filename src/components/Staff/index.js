@@ -1,5 +1,3 @@
-import React from "react";
+import Staff from "./Staff";
 
-export default function Staff() {
-  return <h1>Staff</h1>;
-}
+export default Staff;

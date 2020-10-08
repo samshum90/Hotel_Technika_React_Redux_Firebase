@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { compose } from "recompose";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { withAuthorization } from "../Session";
 
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Reservations(props) {
+function Reservations() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { bookings } = useSelector((state) => ({
@@ -37,7 +36,6 @@ function Reservations(props) {
       uid: key,
     })),
   }));
-  const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
@@ -72,6 +70,7 @@ function Reservations(props) {
                   <ReservationListItem
                     key={reservation.uid}
                     reservation={reservation}
+                    setError={setError}
                   />
                 ))}
             </TableBody>
@@ -81,4 +80,7 @@ function Reservations(props) {
     </Container>
   );
 }
-export default Reservations;
+
+const condition = (authUser) => authUser && !!authUser.roles[ROLES.ADMIN];
+
+export default withAuthorization(condition)(Reservations);

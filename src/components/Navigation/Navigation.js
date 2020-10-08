@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import SignOutButton from "../SignOut";
 import "./Navigation.css";
-import { Typography, Button } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";

@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { withFirebase } from "../Firebase";
 import { CreateBookingEdit } from "../Booking";
 
 import {
   makeStyles,
-  Radio,
   TableRow,
   TableCell,
   Button,
-  TextField,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-  RadioGroup,
   DialogContentText,
 } from "@material-ui/core";
 
@@ -37,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   row: {
     cursor: "pointer",
   },
+  button: {
+    marginRight: theme.spacing(2),
+  },
 }));
 
 function ReservationListItem(props) {
@@ -46,7 +43,6 @@ function ReservationListItem(props) {
   const { reservation, error, setError } = props;
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
-  const [reserved] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
   const [room, setRoom] = useState("");
   const [status, setStatus] = useState("");
@@ -54,13 +50,9 @@ function ReservationListItem(props) {
     { firstName: "guest 1" },
   ]);
   const [reservationMode] = useState(true);
-  const { rooms, guests } = useSelector((state) => ({
+  const { guests } = useSelector((state) => ({
     guests: Object.keys(state.guestState.guests || {}).map((key) => ({
       ...state.guestState.guests[key],
-      uid: key,
-    })),
-    rooms: Object.keys(state.roomState.rooms || {}).map((key) => ({
-      ...state.roomState.rooms[key],
       uid: key,
     })),
   }));
@@ -93,7 +85,7 @@ function ReservationListItem(props) {
       checkInDate,
       checkOutDate,
       room,
-      reserved,
+      status,
       numberOfGuests,
     };
 
@@ -188,6 +180,7 @@ function ReservationListItem(props) {
           type="button"
           onClick={checkOut}
           size="small"
+          className={classes.button}
         >
           Check Out
         </Button>
@@ -202,6 +195,7 @@ function ReservationListItem(props) {
           type="button"
           onClick={checkIn}
           size="small"
+          className={classes.button}
         >
           Check In
         </Button>
@@ -227,6 +221,7 @@ function ReservationListItem(props) {
             type="button"
             onClick={() => handleClickOpen()}
             size="small"
+            className={classes.button}
           >
             Edit
           </Button>
@@ -236,6 +231,7 @@ function ReservationListItem(props) {
             variant="contained"
             type="button"
             size="small"
+            className={classes.button}
           >
             Delete
           </Button>
@@ -270,6 +266,8 @@ function ReservationListItem(props) {
             numberOfGuests={numberOfGuests}
             setNumberOfGuests={setNumberOfGuests}
             reservationMode={reservationMode}
+            status={status}
+            setStatus={setStatus}
           />
         </DialogContent>
         <DialogActions>

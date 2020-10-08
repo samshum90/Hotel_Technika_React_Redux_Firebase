@@ -36,7 +36,6 @@ function Guests(props) {
       uid: key,
     })),
   }));
-  const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {

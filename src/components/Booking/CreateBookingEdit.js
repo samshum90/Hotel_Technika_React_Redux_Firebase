@@ -13,6 +13,10 @@ import {
   IconButton,
   Box,
   CardActions,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -60,6 +64,7 @@ function CreateBookingEdit({
   setNumberOfGuests,
   reservationMode,
   status,
+  setStatus,
 }) {
   const classes = useStyles();
   const { rooms } = useSelector((state) => ({
@@ -84,6 +89,10 @@ function CreateBookingEdit({
       return guest.firstName;
     }
   }
+
+  const handleSelectorChange = (e) => {
+    setStatus(e.target.value);
+  };
 
   return (
     <>
@@ -183,6 +192,7 @@ function CreateBookingEdit({
               </CardActions>
             </Card>
           </Grid>
+
           <Grid item xs={6}>
             <Card>
               {room && (
@@ -207,24 +217,35 @@ function CreateBookingEdit({
                 </CardContent>
               )}
             </Card>
+            {reservationMode ? (
+              <Card className={classes.card}>
+                <CardContent>
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                    size="small"
+                    fullWidth
+                  >
+                    <InputLabel id="demo-simple-select-label">
+                      Status
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Status"
+                      value={status}
+                      onChange={handleSelectorChange}
+                    >
+                      <MenuItem value={"Started"}>Started</MenuItem>
+                      <MenuItem value={"Booked"}>Booked</MenuItem>
+                      <MenuItem value={"Checked In"}>Checked In</MenuItem>
+                      <MenuItem value={"Complete"}>Complete</MenuItem>
+                    </Select>
+                  </FormControl>
+                </CardContent>
+              </Card>
+            ) : null}
           </Grid>
-          {!reservationMode ? (
-            <Grid item xs={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Status</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={status}
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          ) : null}
           {!reservationMode ? (
             <Grid item xs={12}>
               <Button
