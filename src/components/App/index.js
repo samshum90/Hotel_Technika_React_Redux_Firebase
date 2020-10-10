@@ -13,7 +13,7 @@ import Home from "../Home";
 import Register from "../Register";
 import Bookings from "../Booking";
 import Activities from "../Activities";
-import Staff from "../Home";
+import Staff from "../Staff";
 import Account from "../Account";
 import Admin from "../Admin";
 import Room from "../Rooms";
