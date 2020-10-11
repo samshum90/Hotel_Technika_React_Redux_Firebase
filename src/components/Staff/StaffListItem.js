@@ -12,20 +12,19 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  InputLabel,
   Select,
   MenuItem,
+  DialogTitle,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(2),
-      width: 300,
-    },
-    " & .MuiFormControl-root": {
-      margin: theme.spacing(2),
-    },
+    display: "flex",
+    flexDirection: "column",
+  },
+  textField: {
+    marginBottom: theme.spacing(2),
   },
   paper: {
     padding: theme.spacing(2),
@@ -48,7 +47,7 @@ function StaffListItem(props) {
   useEffect(() => {
     setUsername(user.username);
     setEmail(user.email);
-    setCurrentRole(user.roles);
+    setCurrentRole(Object.keys(user.roles));
   }, []);
 
   const handleSubmit = (event) => {
@@ -62,16 +61,12 @@ function StaffListItem(props) {
       roles,
     };
 
-    console.log(editedUser);
-
     props.firebase
       .fetchId("users", user.uid)
       .set(editedUser)
       .then(() => {
-        alert(`You have Edited 
-    ${username} 
-    `);
-        setOpen(true);
+        alert(`You have Edited ${username}`);
+        setOpen(false);
       })
       .catch((error) => {
         setError({ error });
@@ -91,7 +86,7 @@ function StaffListItem(props) {
       <TableRow hover className={classes.row}>
         <TableCell>{username}</TableCell>
         <TableCell>{email}</TableCell>
-        <TableCell>{Object.keys(currentRole)}</TableCell>
+        <TableCell>{currentRole}</TableCell>
         <TableCell>
           <Button
             color="secondary"
@@ -116,9 +111,9 @@ function StaffListItem(props) {
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
-        aria-labelledby="form-dialog-title"
+        aria-labelledby="form-dialog"
       >
-        <DialogTitle id="form-dialog-title">{username}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{user.uid}</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit} className={classes.root}>
             <TextField
@@ -126,14 +121,19 @@ function StaffListItem(props) {
               id="standard-basic"
               label="Username"
               type="text"
+              className={classes.textField}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+              Status
+            </InputLabel>
+
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="Status"
-              value={Object.keys(currentRole)}
+              value={currentRole}
               onChange={handleSelectorChange}
             >
               <MenuItem value={ROLES.ADMIN}>ADMIN</MenuItem>
