@@ -5,11 +5,21 @@ import { useSelector } from "react-redux";
 import { withAuthorization } from "../Session";
 
 import GuestList from "./GuestList";
+import TableToolbar from "./TableToolbar";
 import * as ROLES from "../../constants/roles";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core";
+import {
+  Container,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  DialogContentText,
+} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
+import TablePagination from "@material-ui/core/TablePagination";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
 
 function Guests(props) {
   const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
   const { guests } = useSelector((state) => ({
     guests: Object.keys(state.guestState.guests || {}).map((key) => ({
       ...state.guestState.guests[key],
@@ -35,11 +49,85 @@ function Guests(props) {
     setLoading(false);
   }, [guests]);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  async function loopDelete() {
+    for (let i = 0; i < selected.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
+      props.firebase.fetchId("guests", selected[i]).remove();
+    }
+  }
+
+  function handleDeleteAllSelected() {
+    if (selected.length > 1) {
+      loopDelete();
+      setOpenDeleteConfirmation(false);
+      setSelected([]);
+    } else {
+      props.firebase.fetchId("guests", selected).remove();
+    }
+  }
+
   return (
     <Container maxWidth="xl">
       <Paper className={classes.container}>
-        <h2>Guests</h2>
-        <GuestList guests={guests} loading={loading} />
+        <TableToolbar
+          numSelected={selected.length}
+          deleteAllSelected={() => setOpenDeleteConfirmation(true)}
+        />
+        <GuestList
+          guests={guests}
+          loading={loading}
+          selected={selected}
+          setSelected={setSelected}
+          page={page}
+          rowsPerPage={rowsPerPage}
+        />
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 50, 100]}
+          component="div"
+          count={guests.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+        <Dialog
+          open={openDeleteConfirmation}
+          onClose={() => {
+            setOpenDeleteConfirmation(false);
+          }}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Confirmation</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to Delete the selected {selected.length}{" "}
+              guests?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setOpenDeleteConfirmation(false);
+              }}
+              color="primary"
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleDeleteAllSelected} color="primary" autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     </Container>
   );

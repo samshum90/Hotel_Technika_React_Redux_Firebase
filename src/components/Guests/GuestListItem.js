@@ -17,7 +17,9 @@ import {
   FormControl,
   FormLabel,
   RadioGroup,
+  Checkbox,
 } from "@material-ui/core";
+import { findAllByDisplayValue } from "@testing-library/react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +43,7 @@ function GuestListItem(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [error, setError] = useState("");
-  const { guest } = props;
+  const { guest, selected, setSelected, index } = props;
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -93,7 +95,7 @@ function GuestListItem(props) {
     ${address} 
     ${postcode} 
     `);
-        handleClose();
+        setOpen(false);
       })
       .catch((error) => {
         setError({ error });
@@ -104,18 +106,51 @@ function GuestListItem(props) {
     props.firebase.fetchId("guests", uid).remove();
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
 
-  const handleClose = () => {
-    setOpen(false);
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
   };
+  // const isItemSelected = isSelected(guest.firstName);
+  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const labelId = `enhanced-table-checkbox-${index}`;
 
   return (
     <>
-      <TableRow hover onClick={handleClickOpen} className={classes.row}>
-        <TableCell>{firstName + " " + lastName}</TableCell>
+      <TableRow
+        hover
+        onClick={(event) => handleClick(event, guest.uid)}
+        className={classes.row}
+        role="checkbox"
+        aria-checked={isSelected(guest.uid)}
+        tabIndex={-1}
+        key={guest.fistName}
+        selected={isSelected(guest.uid)}
+      >
+        <TableCell padding="checkbox">
+          <Checkbox
+            checked={isSelected(guest.uid)}
+            inputProps={{ "aria-labelledby": labelId }}
+          />
+        </TableCell>
+
+        <TableCell component="th" id={labelId} scope="row" padding="none">
+          {firstName + " " + lastName}
+        </TableCell>
         <TableCell>{dateOfBirth}</TableCell>
         <TableCell>{contactNumber}</TableCell>
         <TableCell>{email}</TableCell>
@@ -133,7 +168,7 @@ function GuestListItem(props) {
       </TableRow>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
@@ -251,7 +286,7 @@ function GuestListItem(props) {
             Delete
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={() => setOpen(false)}
             color="secondary"
             variant="contained"
             type="submit"

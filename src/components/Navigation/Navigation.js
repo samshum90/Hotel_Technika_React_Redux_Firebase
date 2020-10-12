@@ -18,17 +18,21 @@ const mapStateToProps = (state) => ({
 const NavigationAuth = ({ authUser }) => (
   <Typography className="navigation">
     {(!!authUser.roles[ROLES.ADMIN] || !!authUser.roles[ROLES.STAFF]) && (
-      <Link to={ROUTES.REGISTER}>Register</Link>
+      <>
+        <Link to={ROUTES.REGISTER}>Register</Link>
+        <Link to={ROUTES.BOOKINGS}>Bookings</Link>
+        <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
+        <Link to={ROUTES.GUESTS}>Guests</Link>
+      </>
     )}
-    {(!!authUser.roles[ROLES.ADMIN] || !!authUser.roles[ROLES.STAFF]) && (
-      <Link to={ROUTES.BOOKINGS}>Bookings</Link>
+
+    {!!authUser.roles[ROLES.ADMIN] && (
+      <>
+        <Link to={ROUTES.ROOM}>Rooms</Link>
+        <Link to={ROUTES.STAFF}>Staff</Link>
+      </>
     )}
-    {(!!authUser.roles[ROLES.ADMIN] || !!authUser.roles[ROLES.STAFF]) && (
-      <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
-    )}
-    {!!authUser.roles[ROLES.ADMIN] && <Link to={ROUTES.ROOM}>Rooms</Link>}
-    {!!authUser.roles[ROLES.ADMIN] && <Link to={ROUTES.GUESTS}>Guests</Link>}
-    {!!authUser.roles[ROLES.ADMIN] && <Link to={ROUTES.STAFF}>Staff</Link>}
+
     <Link to={ROUTES.ACCOUNT}>Account</Link>
     <SignOutButton />
   </Typography>

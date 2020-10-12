@@ -1,7 +1,7 @@
 import React from "react";
 import { withFirebase } from "../Firebase";
 
-import { Paper, TextField, Button } from "@material-ui/core";
+import { Paper, TextField, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(2),
   },
+  // title: {
+  //   padding: theme.spacing(2),
+  // },
 }));
 
 function BookingForm({
@@ -49,7 +52,9 @@ function BookingForm({
 
   return (
     <Paper className={classes.paper}>
-      <h2>Find a Room</h2>
+      <Typography variant="h5" gutterBottom className={classes.title}>
+        Find a Room
+      </Typography>
       <form className={classes.root} onSubmit={handleSubmit}>
         <div>
           <TextField

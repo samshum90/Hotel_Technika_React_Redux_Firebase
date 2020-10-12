@@ -12,7 +12,6 @@ import BookingForm from "./BookingForm";
 import BookingList from "./BookingList";
 
 function Bookings(props) {
-  const [loading, setLoading] = useState(false);
   const { bookings, rooms } = useSelector((state) => ({
     bookings: Object.keys(state.bookingState.bookings || {}).map((key) => ({
       ...state.bookingState.bookings[key],
@@ -28,12 +27,6 @@ function Bookings(props) {
   const [checkOutDate, setCheckOutDate] = useState("");
   const [status] = useState("Started");
   const [numberOfGuests, setNumberOfGuests] = useState("");
-
-  useEffect(() => {
-    if (!bookings.length) {
-      setLoading(true);
-    }
-  }, []);
 
   function createBooking(room) {
     const booking = {
@@ -58,11 +51,12 @@ function Bookings(props) {
         numberOfGuests={numberOfGuests}
         setNumberOfGuests={setNumberOfGuests}
       />
-      <BookingList
-        loading={loading}
-        filteredRooms={filteredRooms}
-        createBooking={createBooking}
-      />
+      {filteredRooms && (
+        <BookingList
+          filteredRooms={filteredRooms}
+          createBooking={createBooking}
+        />
+      )}
     </Container>
   );
 }
