@@ -70,13 +70,6 @@ const images = [
     link: ROUTES.GUESTS,
     auth: ROLES.ADMIN,
   },
-  {
-    url: "",
-    title: "Admin",
-    width: "31%",
-    link: ROUTES.ADMIN,
-    auth: ROLES.ADMIN,
-  },
 ];
 
 const useStyles = makeStyles((theme) => ({

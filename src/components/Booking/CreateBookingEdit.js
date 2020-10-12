@@ -25,6 +25,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.grid,
+    padding: theme.spacing(1),
   },
   paper: {
     padding: theme.spacing(2),
@@ -98,11 +99,11 @@ function CreateBookingEdit({
     <>
       {booking && (
         <Grid container spacing={3} component={Paper} className={classes.root}>
-          <Grid item xs={12}>
-            {!reservationMode ? (
+          {!reservationMode ? (
+            <Grid item xs={12}>
               <Typography variant="h4">Confirm details</Typography>
-            ) : null}
-          </Grid>
+            </Grid>
+          ) : null}
           <Grid item xs={6}>
             <Card>
               <CardContent>

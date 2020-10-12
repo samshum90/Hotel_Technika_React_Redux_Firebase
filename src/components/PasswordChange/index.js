@@ -1,66 +1,92 @@
-import React, { Component } from 'react';
-import { withFirebase } from '../Firebase'
+import React, { useState } from "react";
+import { withFirebase } from "../Firebase";
+import { TextField, Button, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const INITIAL_STATE = {
-    passwordOne: '',
-    passwordTwo: '',
-    error: null,
-};
+import { useInput } from "../hooks/input-hook";
 
-class PasswordChangeForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { ...INITIAL_STATE }
-    }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(1),
+    display: "flex",
+    flexDirection: "column",
+    width: "20vw",
+  },
+  textField: {
+    marginBottom: theme.spacing(1),
+  },
+  button: {
+    width: theme.spacing(35),
+  },
+}));
 
-    onSubmit = event => {
-        const { passwordOne } = this.state;
+function PasswordChangeForm(props) {
+  const classes = useStyles();
+  const [error, setError] = useState("");
+  const {
+    value: passwordOne,
+    bind: bindPasswordOne,
+    reset: resetPasswordOne,
+  } = useInput("");
 
-        this.props.firebase
-        .doPasswordUpdate(passwordOne)
-        .then(() => {
-            this.setState({ ...INITIAL_STATE})
-        })
-        .catch(error => {
-            this.setState({ error });
-        });
-        event.preventDefault();
-    };
+  const {
+    value: passwordTwo,
+    bind: bindPasswordTwo,
+    reset: resetPasswordTwo,
+  } = useInput("");
 
-    onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
+  const onSubmit = (event) => {
+    props.firebase
+      .doPasswordUpdate(passwordOne)
+      .then(() => {
+        resetPasswordOne();
+        resetPasswordTwo();
+      })
+      .catch((error) => {
+        setError({ error });
+      });
+    event.preventDefault();
+  };
 
-    render() { 
-        const { passwordOne, passwordTwo, error } = this.state;
+  const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
+  return (
+    <form onSubmit={onSubmit} className={classes.root}>
+      <Typography variant="h5" gutterBottom>
+        Change Password
+      </Typography>
+      <TextField
+        id="filled-margin-none"
+        className={classes.textField}
+        name="passwordOne"
+        type="password"
+        variant="filled"
+        size="small"
+        placeholder="New password"
+        {...bindPasswordOne}
+      />
+      <TextField
+        id="filled-margin-none"
+        className={classes.textField}
+        name="passwordTwo"
+        type="password"
+        variant="filled"
+        size="small"
+        placeholder="Confirm New Password"
+        {...bindPasswordTwo}
+      />
+      <Button
+        className={classes.button}
+        disabled={isInvalid}
+        color="secondary"
+        variant="contained"
+        type="submit"
+      >
+        Reset My Password
+      </Button>
 
-        const isInvalid = 
-            passwordOne !== passwordTwo || passwordOne === '';
-        return (  
-            <form onSubmit={this.onSubmit}>
-                <input 
-                    name="passwordOne"
-                    vale={passwordOne}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="New password"
-                />
-                <input 
-                    name="passwordTwo"
-                    value={passwordTwo}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Confirm New Password"
-                />
-                <button disabled={isInvalid} type="submit">
-                    Reset My Password
-                </button>
-
-                {error && <p>{error.message}</p>}
-            </form>
-        );
-    }
+      {error && <p>{error.message}</p>}
+    </form>
+  );
 }
 
- 
 export default withFirebase(PasswordChangeForm);
