@@ -100,7 +100,7 @@ function ReservationListItem(props) {
         handleClose();
       })
       .catch((error) => {
-        setError({ error });
+        setError(error);
       });
   };
 

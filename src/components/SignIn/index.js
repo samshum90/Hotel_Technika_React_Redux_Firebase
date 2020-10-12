@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 
@@ -7,73 +7,90 @@ import { PasswordForgetLink } from "../PasswordForget";
 import * as ROUTES from "../../constants/routes";
 import { withFirebase } from "../Firebase";
 
-const SignIn = () => (
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
-  </div>
-);
+import { Button, TextField, Container, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const INITIAL_STATE = {
-  email: "",
-  password: "",
-  error: null,
+const useStyles = makeStyles((theme) => ({
+  container: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+  },
+  TextField: {
+    marginBottom: theme.spacing(2),
+  },
+}));
+
+const SignIn = () => {
+  const classes = useStyles();
+
+  return (
+    <Container maxWidth="xl">
+      <Paper className={classes.container}>
+        <h1>SignIn</h1>
+        <SignInForm />
+        <PasswordForgetLink />
+        <SignUpLink />
+      </Paper>
+    </Container>
+  );
 };
 
-class SignInFormBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
-  onSubmit = (event) => {
-    const { email, password } = this.state;
+function SignInFormBase(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    this.props.firebase
+  const onSubmit = (event) => {
+    props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        setEmail("");
+        setPassword("");
+        props.history.push(ROUTES.HOME);
       })
       .catch((error) => {
-        this.setState({ error });
+        setError(error);
       });
     event.preventDefault();
   };
-  onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
 
-  render() {
-    const { email, password, error } = this.state;
+  const classes = useStyles();
+  const isInvalid = password === "" || email === "";
 
-    const isInvalid = password === "" || email === "";
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
+  return (
+    <form onSubmit={onSubmit}>
+      <div className={classes.TextField}>
+        <TextField
           name="email"
+          id="standard-basic"
+          label="Email"
           value={email}
-          onChange={this.onChange}
+          onChange={(e) => setEmail(e.target.value)}
           type="text"
-          placeholder="Email Address"
         />
-        <input
+      </div>
+      <div className={classes.TextField}>
+        <TextField
           name="password"
+          id="standard-basic"
+          label="Password"
           value={password}
-          onChange={this.onChange}
+          onChange={(e) => setPassword(e.target.value)}
           type="password"
-          placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+      </div>
+      <Button
+        disabled={isInvalid}
+        type="submit"
+        color="secondary"
+        variant="contained"
+      >
+        Sign In
+      </Button>
 
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
+      {error && <p>{error.message}</p>}
+    </form>
+  );
 }
 
 const SignInForm = compose(withRouter(withFirebase(SignInFormBase)));

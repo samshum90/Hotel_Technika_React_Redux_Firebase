@@ -121,7 +121,7 @@ function CreateBooking(props) {
         props.history.push(ROUTES.HOME);
       })
       .catch((error) => {
-        setError({ error });
+        setError(error);
       });
   }
 

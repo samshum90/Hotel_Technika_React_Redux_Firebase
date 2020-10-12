@@ -69,7 +69,7 @@ function StaffListItem(props) {
         setOpen(false);
       })
       .catch((error) => {
-        setError({ error });
+        setError(error);
       });
   };
 

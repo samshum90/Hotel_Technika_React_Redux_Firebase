@@ -89,7 +89,7 @@ function RoomForm(props) {
         });
       })
       .catch((error) => {
-        setError({ error });
+        setError(error);
       });
   };
 

@@ -19,7 +19,6 @@ import {
   RadioGroup,
   Checkbox,
 } from "@material-ui/core";
-import { findAllByDisplayValue } from "@testing-library/react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,7 +97,7 @@ function GuestListItem(props) {
         setOpen(false);
       })
       .catch((error) => {
-        setError({ error });
+        setError(error);
       });
   };
 

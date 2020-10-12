@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { compose } from "recompose";
 
@@ -6,124 +6,126 @@ import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 import { withFirebase } from "../Firebase";
 
-const SignUp = () => (
-  <div>
-    <h1>Sign Up</h1>
-    <SignUpForm />
-  </div>
-);
+import { Button, TextField, Container, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const INITIAL_STATE = {
-  username: "",
-  email: "",
-  passwordOne: "",
-  passwordTwo: "",
-  isAdmin: false,
-  error: null,
+const useStyles = makeStyles((theme) => ({
+  container: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+  },
+  TextField: {
+    marginBottom: theme.spacing(2),
+  },
+}));
+
+const SignUp = () => {
+  const classes = useStyles();
+
+  return (
+    <Container maxWidth="xl">
+      <Paper className={classes.container}>
+        <h1>Sign Up</h1>
+        <SignUpForm />
+      </Paper>
+    </Container>
+  );
 };
 
-class SignUpFormBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
-  onSubmit = (event) => {
-    const { username, email, passwordOne, isAdmin } = this.state;
-    const roles = {};
+function SignUpFormBase(props) {
+  const classes = useStyles();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [passwordOne, setPasswordOne] = useState("");
+  const [passwordTwo, setPasswordTwo] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [error, setError] = useState("");
 
-    if (isAdmin) {
-      roles[ROLES.ADMIN] = ROLES.ADMIN;
-    }
+  const onSubmit = (event) => {
+    const roles = { GUEST: ROLES.GUEST };
 
-    this.props.firebase
+    props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
-        return this.props.firebase.user(authUser.user.uid).set({
+        return props.firebase.user(authUser.user.uid).set({
           username,
           email,
           roles,
         });
       })
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        setUsername("");
+        setEmail("");
+        setPasswordOne("");
+        setPasswordTwo("");
+        setIsAdmin(false);
+        props.history.push(ROUTES.HOME);
       })
       .catch((error) => {
-        this.setState({ error });
+        setError(error);
       });
     event.preventDefault();
   };
 
-  onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  const isInvalid =
+    passwordOne !== passwordTwo ||
+    passwordOne === "" ||
+    email === "" ||
+    username === "";
 
-  onChangeCheckbox = (event) => {
-    this.setState({ [event.target.name]: event.target.checked });
-  };
-
-  render() {
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      isAdmin,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === "" ||
-      email === "" ||
-      username === "";
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
+  return (
+    <form onSubmit={onSubmit}>
+      <div className={classes.TextField}>
+        <TextField
           name="username"
           value={username}
-          onChange={this.onChange}
+          id="standard-basic"
+          label="Username"
+          onChange={(e) => setUsername(e.target.value)}
           type="text"
-          placeholder="Full Name"
         />
-        <input
+      </div>
+      <div className={classes.TextField}>
+        <TextField
           name="email"
           value={email}
-          onChange={this.onChange}
+          id="standard-basic"
+          label="Email"
+          onChange={(e) => setEmail(e.target.value)}
           type="text"
-          placeholder="Email Address"
         />
-        <input
+      </div>
+      <div className={classes.TextField}>
+        <TextField
           name="passwordOne"
           value={passwordOne}
-          onChange={this.onChange}
+          id="standard-basic"
+          label="Password"
+          onChange={(e) => setPasswordOne(e.target.value)}
           type="password"
-          placeholder="Password"
         />
-        <input
+      </div>
+      <div className={classes.TextField}>
+        <TextField
           name="passwordTwo"
           value={passwordTwo}
-          onChange={this.onChange}
+          id="standard-basic"
+          label="Confirm Password"
+          onChange={(e) => setPasswordTwo(e.target.value)}
           type="password"
-          placeholder="Confirm Password"
         />
-        <label>
-          Admin:
-          <input
-            name="isAdmin"
-            type="checkbox"
-            checked={isAdmin}
-            onChange={this.onChangeCheckbox}
-          />
-        </label>
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
+      </div>
+      <Button
+        disabled={isInvalid}
+        type="submit"
+        color="secondary"
+        variant="contained"
+      >
+        Sign Up
+      </Button>
+      {error && <p>{error.message}</p>}
+    </form>
+  );
 }
 
 const SignUpLink = () => {

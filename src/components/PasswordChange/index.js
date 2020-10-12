@@ -43,7 +43,7 @@ function PasswordChangeForm(props) {
         resetPasswordTwo();
       })
       .catch((error) => {
-        setError({ error });
+        setError(error);
       });
     event.preventDefault();
   };
