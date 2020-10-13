@@ -3,19 +3,12 @@ import { useSelector } from "react-redux";
 
 import { withAuthorization } from "../Session";
 
-import ReservationListItem from "./ReservationListItem";
-import TableLoading from "../Loading/TableLoading";
+import ReservationList from "./ReservationList";
+import ReservationSearch from "./ReservationSearch";
 import * as ROLES from "../../constants/roles";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
-import TableContainer from "@material-ui/core/TableContainer";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import Paper from "@material-ui/core/Paper";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -24,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
+  },
+  textField: {
+    marginRight: theme.spacing(1),
+    width: "15wv",
+  },
+  divider: {
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -36,6 +36,7 @@ function Reservations() {
       uid: key,
     })),
   }));
+  const [filteredBookings, setFilteredBookings] = useState("");
   const classes = useStyles();
 
   useEffect(() => {
@@ -47,36 +48,18 @@ function Reservations() {
 
   return (
     <Container maxWidth="xl">
-      <Paper className={classes.container}>
-        <h2>Reservations</h2>
-        {error && <p>{error.message}</p>}
-        <TableContainer>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Booking Ref</TableCell>
-                <TableCell>Check In Date</TableCell>
-                <TableCell>Check Out Date</TableCell>
-                <TableCell>Number of Guests</TableCell>
-                <TableCell>Room Name</TableCell>
-                <TableCell>Booking Status</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading && <TableLoading />}
-              {bookings &&
-                bookings.map((reservation) => (
-                  <ReservationListItem
-                    key={reservation.uid}
-                    reservation={reservation}
-                    setError={setError}
-                  />
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+      <ReservationSearch
+        classes={classes}
+        bookings={bookings}
+        setFilteredBookings={setFilteredBookings}
+      />
+      <ReservationList
+        classes={classes}
+        bookings={bookings}
+        error={error}
+        setError={setError}
+        loading={loading}
+      />
     </Container>
   );
 }
