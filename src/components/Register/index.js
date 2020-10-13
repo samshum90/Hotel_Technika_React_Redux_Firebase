@@ -16,6 +16,7 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
+import * as ROLES from "../../constants/roles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -219,6 +220,7 @@ function Register(props) {
   );
 }
 
-const condition = (authUser) => !!authUser;
+const condition = (authUser) =>
+  (authUser && !!authUser.roles[ROLES.ADMIN]) || !!authUser.roles[ROLES.STAFF];
 
 export default compose(withFirebase, withAuthorization(condition))(Register);

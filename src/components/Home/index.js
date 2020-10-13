@@ -68,7 +68,7 @@ const images = [
     title: "Guests",
     width: "31%",
     link: ROUTES.GUESTS,
-    auth: ROLES.ADMIN,
+    auth: [ROLES.STAFF, ROLES.ADMIN],
   },
 ];
 

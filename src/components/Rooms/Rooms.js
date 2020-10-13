@@ -69,6 +69,8 @@ function Rooms(props) {
   );
 }
 
-const condition = (authUser) => authUser && !!authUser.roles[ROLES.ADMIN];
+const condition = (authUser) =>
+  (authUser && !!authUser.roles[ROLES.ADMIN]) ||
+  (authUser && !!authUser.roles[ROLES.STAFF]);
 
 export default compose(withFirebase, withAuthorization(condition))(Rooms);

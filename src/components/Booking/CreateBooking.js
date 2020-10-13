@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { compose } from "recompose";
+
+import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import CreateBookingEdit from "./CreateBookingEdit";
 import CreateBookingNew from "./CreateBookingNew";
@@ -8,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Container, Paper } from "@material-ui/core";
 
+import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
 
 const useStyles = makeStyles((theme) => ({
@@ -173,4 +177,12 @@ function CreateBooking(props) {
     </Container>
   );
 }
-export default withFirebase(CreateBooking);
+
+const condition = (authUser) =>
+  (authUser && !!authUser.roles[ROLES.ADMIN]) ||
+  (authUser && !!authUser.roles[ROLES.STAFF]);
+
+export default compose(
+  withFirebase,
+  withAuthorization(condition)
+)(CreateBooking);
