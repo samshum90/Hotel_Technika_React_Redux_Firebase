@@ -50,6 +50,8 @@ function Bookings(props) {
         rooms={rooms}
         numberOfGuests={numberOfGuests}
         setNumberOfGuests={setNumberOfGuests}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
       />
       {filteredRooms && (
         <BookingList

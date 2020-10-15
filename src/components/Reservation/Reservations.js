@@ -20,10 +20,14 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     marginRight: theme.spacing(1),
-    width: "15wv",
+    width: "20vw",
   },
   divider: {
     marginBottom: theme.spacing(1),
+  },
+  formControl: {
+    marginRight: theme.spacing(1),
+    width: "20vw",
   },
 }));
 

@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { withFirebase } from "../Firebase";
 
 import { Paper, TextField, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  form: {
     display: "flex",
     flexWrap: "wrap",
-    flexDirection: "column",
+    "align-items": "baseline",
   },
   headTextField: {
     marginRight: theme.spacing(1),
@@ -36,8 +36,12 @@ function BookingForm({
   setCheckOutDate,
   numberOfGuests,
   setNumberOfGuests,
+  dateGreaterThan,
+  checkInDate,
+  checkOutDate,
 }) {
   const classes = useStyles();
+  const [numberOfNights, setnumberOfNights] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,55 +54,81 @@ function BookingForm({
     setFilteredRooms(filteredRooms);
   };
 
+  function dateGreaterThan() {
+    let startDate = new Date(checkInDate);
+    let endDate = new Date(checkOutDate);
+    let result = false;
+
+    if (startDate < endDate) {
+      result = true;
+    }
+    return result;
+  }
+
+  function calculateNights() {
+    let startDate = new Date(checkInDate);
+    let endDate = new Date(checkOutDate);
+    let output = 0;
+
+    if (!!checkInDate && !!checkOutDate && startDate < endDate) {
+      output = Math.round(Math.abs(+startDate - +endDate) / 8.64e7);
+    }
+    return output;
+  }
+
+  const isInvalid = !dateGreaterThan() || numberOfGuests === "";
+
   return (
     <Paper className={classes.paper}>
       <Typography variant="h5" gutterBottom className={classes.title}>
         Find a Room
       </Typography>
-      <form className={classes.root} onSubmit={handleSubmit}>
-        <div>
-          <TextField
-            name="checkInDate"
-            id="date"
-            label="Check In Date"
-            className={classes.textField}
-            variant="filled"
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setCheckInDate(e.target.value)}
-          />
-          <TextField
-            name="checkOutDate"
-            id="date"
-            label="Check Out Date"
-            type="date"
-            className={classes.textField}
-            variant="filled"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setCheckOutDate(e.target.value)}
-          />
-          <TextField
-            name="numberOfPeople"
-            id="filled-margin-none"
-            label="Number Of People"
-            type="number"
-            variant="filled"
-            className={classes.textField}
-            onChange={(e) => setNumberOfGuests(e.target.value)}
-          />
-          <Button
-            className={classes.button}
-            color="secondary"
-            variant="contained"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </div>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <TextField
+          name="checkInDate"
+          id="date"
+          label="Check In Date"
+          className={classes.textField}
+          variant="filled"
+          type="date"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => setCheckInDate(e.target.value)}
+        />
+        <TextField
+          name="checkOutDate"
+          id="date"
+          label="Check Out Date"
+          type="date"
+          className={classes.textField}
+          variant="filled"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => setCheckOutDate(e.target.value)}
+        />
+        <TextField
+          name="numberOfPeople"
+          id="filled-margin-none"
+          label="Number Of People"
+          type="number"
+          variant="filled"
+          className={classes.textField}
+          onChange={(e) => setNumberOfGuests(e.target.value)}
+        />
+        <Typography className={classes.textField}>
+          {calculateNights()} Nights
+        </Typography>
+        <Button
+          disabled={isInvalid}
+          className={classes.button}
+          color="secondary"
+          variant="contained"
+          type="submit"
+        >
+          Submit
+        </Button>
       </form>
     </Paper>
   );

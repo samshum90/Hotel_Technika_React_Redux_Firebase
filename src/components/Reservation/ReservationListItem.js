@@ -126,9 +126,8 @@ function ReservationListItem(props) {
   function handleGuest(i, selectedGuest) {
     let newSelectedGuests = [...selectedGuests];
     newSelectedGuests[i] = selectedGuest;
-    setSelectedGuests({
-      ...newSelectedGuests,
-    });
+
+    setSelectedGuests(newSelectedGuests);
   }
 
   const handleDeleteGuest = (i) => (e) => {
@@ -137,9 +136,8 @@ function ReservationListItem(props) {
       ...selectedGuests.slice(0, i),
       ...selectedGuests.slice(i + 1),
     ];
-    setSelectedGuests({
-      ...newSelectedGuests,
-    });
+    console.log(newSelectedGuests);
+    setSelectedGuests(newSelectedGuests);
   };
 
   const addGuest = (e) => {
@@ -147,9 +145,7 @@ function ReservationListItem(props) {
     let guestNumber = selectedGuests.length + 1;
     let newInput = { firstName: `guest ${guestNumber}` };
     let newSelectedGuests = selectedGuests.concat([newInput]);
-    setSelectedGuests({
-      newSelectedGuests,
-    });
+    setSelectedGuests(newSelectedGuests);
   };
 
   const checkIn = () => {

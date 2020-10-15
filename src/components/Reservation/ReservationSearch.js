@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 
 import Paper from "@material-ui/core/Paper";
-import { Typography, TextField, Button } from "@material-ui/core/";
+import {
+  Typography,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@material-ui/core/";
 
 function ReservationSearch({ classes, bookings, setFilteredBookings }) {
   const [checkInDate, setCheckInDate] = useState("");
@@ -54,6 +62,10 @@ function ReservationSearch({ classes, bookings, setFilteredBookings }) {
     });
 
     setFilteredBookings(filteredBookings);
+  };
+
+  const handleSelectorChange = (e) => {
+    setBookingStatus(e.target.value);
   };
 
   return (
@@ -116,15 +128,23 @@ function ReservationSearch({ classes, bookings, setFilteredBookings }) {
             variant="filled"
             onChange={(e) => setNumberOfGuests(e.target.value)}
           />
-          <TextField
-            name="bookingStatus"
-            id="filled-basic"
-            label="Booking Status"
-            className={classes.textField}
-            variant="filled"
-            type="text"
-            onChange={(e) => setBookingStatus(e.target.value)}
-          />
+          <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel id="simple-select-filled-label">Status</InputLabel>
+            <Select
+              labelId="simple-select-filled-label"
+              id="simple-select"
+              value={bookingStatus}
+              onChange={handleSelectorChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"Started"}>Started</MenuItem>
+              <MenuItem value={"Booked"}>Booked</MenuItem>
+              <MenuItem value={"Checked In"}>Checked In</MenuItem>
+              <MenuItem value={"Complete"}>Complete</MenuItem>
+            </Select>
+          </FormControl>
         </div>
         <div className={classes.divider}>
           <Button

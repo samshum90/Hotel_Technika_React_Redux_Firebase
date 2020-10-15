@@ -65,45 +65,38 @@ function CreateBooking(props) {
       setRoom(booking.room);
       setNumberOfGuests(booking.numberOfGuests);
       setLoading(false);
-      setStatus(booking.status);
+      setStatus("Booked");
     }
   }
   function onToggleEditMode() {
     setEditMode(!editMode);
   }
 
-  function handleGuest(i, selectedGuest) {
-    let selectedGuests = [...selectedGuests];
-    selectedGuests[i] = selectedGuest;
-    setSelectedGuests({
-      ...selectedGuests,
-    });
+  function handleGuest(i, newGuest) {
+    let newGuestsArray = [...selectedGuests];
+    newGuestsArray[i] = newGuest;
+    setSelectedGuests(newGuestsArray);
   }
 
   const handleDeleteGuest = (i) => (e) => {
     e.preventDefault();
-    let selectedGuests = [
+    let newGuestsArray = [
       ...selectedGuests.slice(0, i),
       ...selectedGuests.slice(i + 1),
     ];
-    setSelectedGuests({
-      ...selectedGuests,
-    });
+    setSelectedGuests(newGuestsArray);
   };
 
   const addGuest = (e) => {
     e.preventDefault();
     let guestNumber = selectedGuests.length + 1;
     let newInput = { firstName: `guest ${guestNumber}` };
-    let selectedGuests = selectedGuests.concat([newInput]);
-    setSelectedGuests({
-      selectedGuests,
-    });
+    let newGuestsArray = selectedGuests.concat([newInput]);
+    setSelectedGuests(newGuestsArray);
   };
 
   function handleSubmit(event) {
     event.preventDefault();
-    setStatus("Booked");
     const guests = selectedGuests;
     const editedBooking = {
       guests,
