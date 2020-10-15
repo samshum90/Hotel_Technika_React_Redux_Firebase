@@ -3,16 +3,57 @@ import React, { useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import { Typography, TextField, Button } from "@material-ui/core/";
 
-function ReservationSearch({ classes, bookings, setFilterBookings }) {
+function ReservationSearch({ classes, bookings, setFilteredBookings }) {
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [bookingRef, setBookingRef] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
-  const [RoomName, setRoomName] = useState("");
-  const [BookingStatus, setBookingStatus] = useState("");
+  const [roomName, setRoomName] = useState("");
+  const [bookingStatus, setBookingStatus] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let query = [
+      bookingRef,
+      checkInDate,
+      checkOutDate,
+      numberOfGuests,
+      roomName,
+      bookingStatus,
+    ];
+    const filteredBookings = bookings.filter((booking) => {
+      if (
+        query[0] &&
+        !booking.uid.toLowerCase().includes(query[0].toLowerCase())
+      ) {
+        return false;
+      }
+      if (query[1] && !booking.checkInDate.includes(query[1])) {
+        return false;
+      }
+      if (query[2] && !booking.checkOutDate.includes(query[2])) {
+        return false;
+      }
+      if (query[3] && !booking.numberOfGuests.includes(query[3])) {
+        return false;
+      }
+      if (
+        query[4] &&
+        !booking.room.roomName.toLowerCase().includes(query[4].toLowerCase())
+      ) {
+        return false;
+      }
+      if (
+        query[5] &&
+        !booking.status.toLowerCase().includes(query[5].toLowerCase())
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+
+    setFilteredBookings(filteredBookings);
   };
 
   return (
@@ -31,8 +72,6 @@ function ReservationSearch({ classes, bookings, setFilterBookings }) {
             type="text"
             onChange={(e) => setBookingRef(e.target.value)}
           />
-        </div>
-        <div className={classes.divider}>
           <TextField
             name="checkInDate"
             id="date"
@@ -77,8 +116,6 @@ function ReservationSearch({ classes, bookings, setFilterBookings }) {
             variant="filled"
             onChange={(e) => setNumberOfGuests(e.target.value)}
           />
-        </div>
-        <div className={classes.divider}>
           <TextField
             name="bookingStatus"
             id="filled-basic"

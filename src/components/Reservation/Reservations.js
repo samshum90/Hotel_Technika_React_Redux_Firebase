@@ -55,7 +55,7 @@ function Reservations() {
       />
       <ReservationList
         classes={classes}
-        bookings={bookings}
+        bookings={filteredBookings}
         error={error}
         setError={setError}
         loading={loading}
