@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
@@ -20,6 +18,7 @@ import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import HomeIcon from "@material-ui/icons/Home";
 
+import SignOutButton from "../SignOut";
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 
@@ -109,6 +108,9 @@ const NavigationListAuth = ({ setOpen }) => {
           <ListItemText>
             <Link to={ROUTES.ACCOUNT}>Account</Link>
           </ListItemText>
+        </ListItem>
+        <ListItem button>
+          <SignOutButton />
         </ListItem>
       </List>
     </div>

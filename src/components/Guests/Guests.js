@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import { withAuthorization } from "../Session";
 
+import GuestSearch from "./GuestSearch";
 import GuestList from "./GuestList";
 import TableToolbar from "./TableToolbar";
 import * as ROLES from "../../constants/roles";
@@ -26,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
   },
+  textField: {
+    marginRight: theme.spacing(1),
+    width: "15wv",
+  },
+  divider: {
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 function Guests(props) {
@@ -34,6 +42,7 @@ function Guests(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+  const [filteredGuests, setFilteredGuests] = useState("");
   const { guests } = useSelector((state) => ({
     guests: Object.keys(state.guestState.guests || {}).map((key) => ({
       ...state.guestState.guests[key],
@@ -46,8 +55,9 @@ function Guests(props) {
     if (!guests.length) {
       setLoading(true);
     }
+    setFilteredGuests(guests);
     setLoading(false);
-  }, [guests]);
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -77,13 +87,19 @@ function Guests(props) {
 
   return (
     <Container maxWidth="xl">
+      <GuestSearch
+        classes={classes}
+        guests={guests}
+        setFilteredGuests={setFilteredGuests}
+      />
+
       <Paper className={classes.container}>
         <TableToolbar
           numSelected={selected.length}
           deleteAllSelected={() => setOpenDeleteConfirmation(true)}
         />
         <GuestList
-          guests={guests}
+          guests={filteredGuests}
           loading={loading}
           selected={selected}
           setSelected={setSelected}

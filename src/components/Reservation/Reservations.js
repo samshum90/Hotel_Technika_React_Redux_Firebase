@@ -40,11 +40,16 @@ function Reservations() {
   const classes = useStyles();
 
   useEffect(() => {
-    if (!bookings.length) {
+    if (!filteredBookings.length) {
       setLoading(true);
     }
+    setBookings();
+  }, []);
+
+  function setBookings() {
+    setFilteredBookings(bookings);
     setLoading(false);
-  }, [bookings]);
+  }
 
   return (
     <Container maxWidth="xl">
