@@ -57,6 +57,15 @@ function ReservationListItem(props) {
     })),
   }));
 
+  const { bookedRoom } = useSelector((state) => ({
+    bookedRoom: Object.keys(state.roomState.rooms || {})
+      .map((key) => ({
+        ...state.roomState.rooms[key],
+        uid: key,
+      }))
+      .find((room) => room.uid === reservation.roomId),
+  }));
+
   useEffect(() => {
     if (!reservation.length) {
       settingState();
@@ -67,8 +76,7 @@ function ReservationListItem(props) {
     if (!checkInDate) {
       setCheckInDate(reservation.checkInDate);
       setCheckOutDate(reservation.checkOutDate);
-      setRoom(reservation.room);
-      setNumberOfGuests(reservation.numberOfGuests);
+      setRoom(bookedRoom);
       setNumberOfGuests(reservation.numberOfGuests);
       setStatus(reservation.status);
       if (!!reservation.guests) {

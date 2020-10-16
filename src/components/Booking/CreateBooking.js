@@ -118,12 +118,13 @@ function CreateBooking(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    const roomId = room.uid;
     const guests = selectedGuests;
     const editedBooking = {
       guests,
       checkInDate,
       checkOutDate,
-      room,
+      roomId,
       status,
       numberOfGuests,
     };

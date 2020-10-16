@@ -22,10 +22,13 @@ import Checkbox from "@material-ui/core/Checkbox";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import ClearIcon from "@material-ui/icons/Clear";
+import KingBedIcon from "@material-ui/icons/KingBed";
+import SingleBedIcon from "@material-ui/icons/SingleBed";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -198,6 +201,9 @@ function RoomListItem({ room, onRemoveRoom, onEditRoom }) {
                 <List>
                   {room.beds.map((bed, index) => (
                     <ListItem key={index}>
+                      <ListItemIcon>
+                        {bed === "Single" ? <SingleBedIcon /> : <KingBedIcon />}
+                      </ListItemIcon>
                       <ListItemText primary={bed} />
                     </ListItem>
                   ))}

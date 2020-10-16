@@ -20,8 +20,11 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemIcon,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
+import KingBedIcon from "@material-ui/icons/KingBed";
+import SingleBedIcon from "@material-ui/icons/SingleBed";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -134,6 +137,7 @@ function CreateBookingEdit({
                   onChange={(e) => setCheckOutDate(e.target.value)}
                 />
                 <TextField
+                  disabled
                   name="numberOfPeople"
                   id="filled-margin-none"
                   label="Number Of People"
@@ -219,6 +223,13 @@ function CreateBookingEdit({
                   <List>
                     {room.beds.map((bed, index) => (
                       <ListItem key={index}>
+                        <ListItemIcon>
+                          {bed === "Single" ? (
+                            <SingleBedIcon />
+                          ) : (
+                            <KingBedIcon />
+                          )}
+                        </ListItemIcon>
                         <ListItemText primary={bed} />
                       </ListItem>
                     ))}

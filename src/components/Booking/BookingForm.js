@@ -50,7 +50,16 @@ function BookingForm({
         (room) => room.roomCapacity.toString() === numberOfGuests
       );
     }
-    setFilteredRooms(filteredRooms);
+    if (filteredRooms.length === 0) {
+      const emptyResults = [
+        {
+          roomName: "Sorry! We have no rooms available",
+        },
+      ];
+      setFilteredRooms(emptyResults);
+    } else {
+      setFilteredRooms(filteredRooms);
+    }
   };
 
   function dateGreaterThan() {
