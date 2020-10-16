@@ -33,6 +33,7 @@ function RoomList({ loading, rooms, onRemoveRoom, onEditRoom }) {
             <TableCell>Room Name</TableCell>
             <TableCell>Room Number</TableCell>
             <TableCell>Room Capacity</TableCell>
+            <TableCell>Price Per Night</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>

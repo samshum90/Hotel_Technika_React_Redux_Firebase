@@ -6,10 +6,10 @@ import {
   TextField,
   Button,
   Select,
-  MenuItem,
   InputLabel,
   FormControl,
   IconButton,
+  InputAdornment,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import { makeStyles } from "@material-ui/core/styles";
@@ -83,29 +83,34 @@ function RoomForm(props) {
     wifi: false,
   });
 
+  const calculateCapacity = () => {
+    let capacity = 0;
+    console.log("initial", capacity);
+    for (let i = 0; i < beds.length; i++) {
+      if (beds[i] === "Single") {
+        capacity += 1;
+      }
+      console.log("first", capacity);
+      if (beds[i] === "Double" || beds[i] === "Queen" || beds[i] === "King") {
+        capacity += 2;
+      }
+      console.log("second", capacity);
+    }
+    console.log("final", capacity);
+    return capacity;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const roomCapacity = () => {
-      let capacity = 0;
-      for (let i = 0; i < beds.length; i++) {
-        if (beds[i] === "Single") {
-          capacity += 1;
-        }
-        if (beds[i] === "Double" || beds[i] === "Queen" || beds[i] === "King") {
-          capacity += 2;
-        }
-      }
-
-      return capacity;
-    };
-
+    const roomCapacity = calculateCapacity();
     const room = {
       roomName,
       roomNumber,
       roomCapacity,
       amenities,
       pricePerNight,
+      beds,
     };
 
     props.firebase
@@ -183,6 +188,11 @@ function RoomForm(props) {
             label="Price Per Night"
             type="number"
             variant="filled"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">£</InputAdornment>
+              ),
+            }}
             className={classes.textField}
             {...bindPricePerNight}
           />
@@ -232,6 +242,7 @@ function RoomForm(props) {
         <div>
           {beds.map((bed, i) => (
             <FormControl
+              key={i}
               variant="filled"
               className={classes.formControl}
               size="small"
@@ -240,13 +251,14 @@ function RoomForm(props) {
               <Select
                 labelId="simple-select-label"
                 id="demo-simple-select"
+                value={bed}
                 className={classes.select}
                 onChange={(e) => handleBed(e, i)}
               >
-                <MenuItem value={"Single"}>Single</MenuItem>
-                <MenuItem value={"Double"}>Double</MenuItem>
-                <MenuItem value={"Queen"}>Queen</MenuItem>
-                <MenuItem value={"King"}>King</MenuItem>
+                <option value={"Single"}>Single</option>
+                <option value={"Double"}>Double</option>
+                <option value={"Queen"}>Queen</option>
+                <option value={"King"}>King</option>
               </Select>
               <IconButton
                 color="primary"

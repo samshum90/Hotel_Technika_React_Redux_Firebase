@@ -17,6 +17,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  List,
+  ListItem,
+  ListItemText,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -91,10 +94,6 @@ function CreateBookingEdit({
     }
   }
 
-  const handleSelectorChange = (e) => {
-    setStatus(e.target.value);
-  };
-
   return (
     <>
       {booking && (
@@ -107,6 +106,7 @@ function CreateBookingEdit({
           <Grid item xs={6}>
             <Card>
               <CardContent>
+                <Typography>Booking Details</Typography>
                 <TextField
                   name="checkInDate"
                   id="date"
@@ -198,6 +198,7 @@ function CreateBookingEdit({
             <Card>
               {room && (
                 <CardContent>
+                  <Typography>Room Details</Typography>
                   <Autocomplete
                     id="combo-box-demo"
                     options={rooms}
@@ -215,27 +216,32 @@ function CreateBookingEdit({
                     )}
                   />
                   <RoomIcons amenities={room.amenities} />
+                  <List>
+                    {room.beds.map((bed, index) => (
+                      <ListItem key={index}>
+                        <ListItemText primary={bed} />
+                      </ListItem>
+                    ))}
+                  </List>
                 </CardContent>
               )}
             </Card>
             {reservationMode ? (
               <Card className={classes.card}>
                 <CardContent>
+                  <Typography>Status</Typography>
                   <FormControl
                     variant="outlined"
                     className={classes.formControl}
                     size="small"
                     fullWidth
                   >
-                    <InputLabel id="demo-simple-select-label">
-                      Status
-                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       label="Status"
                       value={status}
-                      onChange={handleSelectorChange}
+                      onChange={(e) => setStatus(e.target.value)}
                     >
                       <MenuItem value={"Started"}>Started</MenuItem>
                       <MenuItem value={"Booked"}>Booked</MenuItem>
