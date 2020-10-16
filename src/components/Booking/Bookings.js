@@ -29,10 +29,11 @@ function Bookings(props) {
   const [numberOfGuests, setNumberOfGuests] = useState("");
 
   function createBooking(room) {
+    const roomId = room.uid;
     const booking = {
       checkInDate,
       checkOutDate,
-      room,
+      roomId,
       status,
       numberOfGuests,
     };

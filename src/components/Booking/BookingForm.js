@@ -41,14 +41,13 @@ function BookingForm({
   checkOutDate,
 }) {
   const classes = useStyles();
-  const [numberOfNights, setnumberOfNights] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     let filteredRooms = rooms;
     if (numberOfGuests !== "") {
       filteredRooms = rooms.filter(
-        (room) => room.roomCapacity === numberOfGuests
+        (room) => room.roomCapacity.toString() === numberOfGuests
       );
     }
     setFilteredRooms(filteredRooms);

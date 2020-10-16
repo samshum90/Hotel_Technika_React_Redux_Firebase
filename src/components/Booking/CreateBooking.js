@@ -25,9 +25,7 @@ function CreateBooking(props) {
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState("");
-  const [selectedGuests, setSelectedGuests] = useState([
-    { firstName: "guest 1" },
-  ]);
+  const [selectedGuests, setSelectedGuests] = useState([]);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
@@ -47,6 +45,15 @@ function CreateBooking(props) {
     })),
   }));
 
+  const { bookedRoom } = useSelector((state) => ({
+    bookedRoom: Object.keys(state.roomState.rooms || {})
+      .map((key) => ({
+        ...state.roomState.rooms[key],
+        uid: key,
+      }))
+      .find((room) => room.uid === booking.roomId),
+  }));
+
   useEffect(() => {
     if (!booking) {
       setLoading(true);
@@ -56,18 +63,33 @@ function CreateBooking(props) {
     }
   }, [booking]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setNumberOfGuests(selectedGuests.length);
+  }, [selectedGuests]);
 
   function settingState() {
-    if (!checkInDate) {
+    if (!checkInDate || !room) {
       setCheckInDate(booking.checkInDate);
       setCheckOutDate(booking.checkOutDate);
-      setRoom(booking.room);
+      setRoom(bookedRoom);
       setNumberOfGuests(booking.numberOfGuests);
       setLoading(false);
       setStatus("Booked");
+      initialGuests();
     }
   }
+
+  function initialGuests() {
+    let newGuestsArray = [...selectedGuests];
+    if (selectedGuests.length < booking.numberOfGuests) {
+      for (let i = 0; i < booking.numberOfGuests; i++) {
+        let newInput = { firstName: `guest ${i + 1}` };
+        newGuestsArray.push(newInput);
+      }
+    }
+    setSelectedGuests(newGuestsArray);
+  }
+
   function onToggleEditMode() {
     setEditMode(!editMode);
   }
@@ -89,8 +111,7 @@ function CreateBooking(props) {
 
   const addGuest = (e) => {
     e.preventDefault();
-    let guestNumber = selectedGuests.length + 1;
-    let newInput = { firstName: `guest ${guestNumber}` };
+    let newInput = { firstName: `guest ${selectedGuests.length + 1}` };
     let newGuestsArray = selectedGuests.concat([newInput]);
     setSelectedGuests(newGuestsArray);
   };
