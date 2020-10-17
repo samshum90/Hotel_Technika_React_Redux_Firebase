@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { withFirebase } from "../Firebase";
 import * as ROLES from "../../constants/roles";
@@ -46,6 +47,9 @@ function StaffListItem(props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [currentRole, setCurrentRole] = useState("");
+  const { authUser } = useSelector((state) => ({
+    authUser: state.sessionState.authUser,
+  }));
 
   useEffect(() => {
     setUsername(user.username);
@@ -84,6 +88,8 @@ function StaffListItem(props) {
     setCurrentRole(e.target.value);
   };
 
+  const isSam = authUser.email !== "sam@sam.com";
+
   return (
     <>
       <TableRow hover className={classes.row}>
@@ -96,6 +102,7 @@ function StaffListItem(props) {
             variant="contained"
             type="button"
             onClick={() => setOpen(true)}
+            className={classes.button}
             size="small"
           >
             Edit
@@ -106,6 +113,8 @@ function StaffListItem(props) {
             variant="contained"
             type="button"
             size="small"
+            disabled={isSam}
+            className={classes.button}
           >
             Delete
           </Button>
@@ -152,7 +161,6 @@ function StaffListItem(props) {
             color="secondary"
             variant="contained"
             type="submit"
-            className={classes.button}
           >
             Save
           </Button>
@@ -162,7 +170,6 @@ function StaffListItem(props) {
             color="secondary"
             variant="contained"
             type="button"
-            className={classes.button}
           >
             Cancel
           </Button>

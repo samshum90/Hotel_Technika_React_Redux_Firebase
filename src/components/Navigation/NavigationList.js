@@ -66,14 +66,7 @@ const NavigationListAuth = ({ authUser, setOpen }) => {
               <Link to={ROUTES.BOOKINGS}>Bookings</Link>
             </ListItemText>
           </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <RoomServiceIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
-            </ListItemText>
-          </ListItem>
+
           <ListItem button>
             <ListItemIcon>
               <EmojiPeopleIcon />
@@ -107,6 +100,14 @@ const NavigationListAuth = ({ authUser, setOpen }) => {
       )}
       <Divider />
       <List>
+        <ListItem button>
+          <ListItemIcon>
+            <RoomServiceIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
+          </ListItemText>
+        </ListItem>
         <ListItem button>
           <ListItemIcon>
             <SupervisorAccountIcon />

@@ -40,7 +40,7 @@ const images = [
     title: "Reservations",
     width: "31%",
     link: ROUTES.RESERVATIONS,
-    auth: [ROLES.STAFF, ROLES.ADMIN],
+    auth: [ROLES.GUEST, ROLES.STAFF, ROLES.ADMIN],
   },
   {
     url: activities,

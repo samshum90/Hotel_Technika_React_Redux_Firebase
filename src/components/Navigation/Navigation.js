@@ -21,7 +21,6 @@ const NavigationAuth = ({ authUser }) => (
       <>
         <Link to={ROUTES.REGISTER}>Register</Link>
         <Link to={ROUTES.BOOKINGS}>Bookings</Link>
-        <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
         <Link to={ROUTES.GUESTS}>Guests</Link>
       </>
     )}
@@ -32,7 +31,7 @@ const NavigationAuth = ({ authUser }) => (
         <Link to={ROUTES.STAFF}>Staff</Link>
       </>
     )}
-
+    <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
     <Link to={ROUTES.ACCOUNT}>Account</Link>
     <SignOutButton />
   </Typography>
