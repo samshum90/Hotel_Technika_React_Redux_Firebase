@@ -116,7 +116,7 @@ function StaffListItem(props) {
         onClose={() => setOpen(false)}
         aria-labelledby="form-dialog"
       >
-        <DialogTitle id="alert-dialog-title">{user.uid}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">User Id:{user.uid}</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit} className={classes.root}>
             <TextField
