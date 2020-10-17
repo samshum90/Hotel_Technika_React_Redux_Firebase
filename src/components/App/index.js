@@ -35,16 +35,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App(props) {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    onListenForState();
-    return () => {
-      props.firebase.fetch("bookings").off();
-      props.firebase.fetch("rooms").off();
-      props.firebase.fetch("guests").off();
-    };
-  }, []);
+  const { authUser } = useSelector((state) => ({
+    authUser: state.sessionState.authUser,
+  }));
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    useEffect(() => {
+      onListenForState();
+      return () => {
+        props.firebase.fetch("bookings").off();
+        props.firebase.fetch("rooms").off();
+        props.firebase.fetch("guests").off();
+      };
+    }, [authUser]);
 
   function onListenForState() {
     props.firebase.fetch("bookings").on("value", (snapshot) => {
