@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ee956a05.chunk.css",
+    "main.js": "/static/js/main.c2749f03.chunk.js",
+    "main.js.map": "/static/js/main.c2749f03.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.7a88e329.js",
+    "runtime-main.js.map": "/static/js/runtime-main.7a88e329.js.map",
+    "static/js/2.45ba2d05.chunk.js": "/static/js/2.45ba2d05.chunk.js",
+    "static/js/2.45ba2d05.chunk.js.map": "/static/js/2.45ba2d05.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.c9fbfd53c2e8c422ae1d2edebf35998a.js": "/precache-manifest.c9fbfd53c2e8c422ae1d2edebf35998a.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.ee956a05.chunk.css.map": "/static/css/main.ee956a05.chunk.css.map",
+    "static/js/2.45ba2d05.chunk.js.LICENSE.txt": "/static/js/2.45ba2d05.chunk.js.LICENSE.txt",
+    "static/media/activities.jpg": "/static/media/activities.e24bab54.jpg",
+    "static/media/booking.jpg": "/static/media/booking.daca035f.jpg",
+    "static/media/guest.jpg": "/static/media/guest.15892850.jpg",
+    "static/media/landing.jpg": "/static/media/landing.c41aa14d.jpg",
+    "static/media/register.jpg": "/static/media/register.9a92489a.jpg",
+    "static/media/reservation.jpg": "/static/media/reservation.a2307f9d.jpg",
+    "static/media/room.jpg": "/static/media/room.0bfcfa99.jpg",
+    "static/media/staff.jpg": "/static/media/staff.84081a59.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7a88e329.js",
+    "static/js/2.45ba2d05.chunk.js",
+    "static/css/main.ee956a05.chunk.css",
+    "static/js/main.c2749f03.chunk.js"
+  ]
+}

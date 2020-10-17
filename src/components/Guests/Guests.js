@@ -55,9 +55,12 @@ function Guests(props) {
     if (!guests.length) {
       setLoading(true);
     }
-    setFilteredGuests(guests);
+    if (!filteredGuests.length) {
+      setFilteredGuests(guests);
+    }
+
     setLoading(false);
-  }, []);
+  }, [filteredGuests]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

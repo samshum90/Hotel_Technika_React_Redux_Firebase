@@ -36,8 +36,8 @@ function GuestList({
   rowsPerPage,
 }) {
   const classes = useStyles();
-  const [orderBy, setOrderBy] = useState("calories");
-  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = useState("firstName");
+  const [order, setOrder] = useState("asc");
 
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);

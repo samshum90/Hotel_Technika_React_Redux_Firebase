@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   row: {
     cursor: "pointer",
   },
+  button: {
+    marginRight: theme.spacing(2),
+  },
 }));
 
 function StaffListItem(props) {
@@ -149,6 +152,7 @@ function StaffListItem(props) {
             color="secondary"
             variant="contained"
             type="submit"
+            className={classes.button}
           >
             Save
           </Button>
@@ -158,6 +162,7 @@ function StaffListItem(props) {
             color="secondary"
             variant="contained"
             type="button"
+            className={classes.button}
           >
             Cancel
           </Button>

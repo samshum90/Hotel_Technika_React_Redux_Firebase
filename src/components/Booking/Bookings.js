@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { compose } from "recompose";
 import { Container } from "@material-ui/core";
@@ -12,11 +12,7 @@ import BookingForm from "./BookingForm";
 import BookingList from "./BookingList";
 
 function Bookings(props) {
-  const { bookings, rooms } = useSelector((state) => ({
-    bookings: Object.keys(state.bookingState.bookings || {}).map((key) => ({
-      ...state.bookingState.bookings[key],
-      uid: key,
-    })),
+  const { rooms } = useSelector((state) => ({
     rooms: Object.keys(state.roomState.rooms || {}).map((key) => ({
       ...state.roomState.rooms[key],
       uid: key,

@@ -29,6 +29,17 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     width: "20vw",
   },
+  visuallyHidden: {
+    border: 0,
+    clip: "rect(0 0 0 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    top: 20,
+    width: 1,
+  },
 }));
 
 function Reservations() {
@@ -47,13 +58,14 @@ function Reservations() {
     if (!filteredBookings.length) {
       setLoading(true);
     }
-    setBookings();
-  }, []);
-
-  function setBookings() {
-    setFilteredBookings(bookings);
-    setLoading(false);
-  }
+    if (!filteredBookings.length) {
+      const setBookings = () => {
+        setFilteredBookings(bookings);
+        setLoading(false);
+      };
+      setBookings();
+    }
+  }, [filteredBookings]);
 
   return (
     <Container maxWidth="xl">

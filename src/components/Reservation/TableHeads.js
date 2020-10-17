@@ -8,18 +8,20 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const headCells = [
-  { id: "firstName", disablePadding: true, label: "Full Name" },
+  { id: "bookingRef", disablePadding: true, label: "Booking Ref" },
   {
-    id: "dateOfBirth",
+    id: "checkInDate",
     disablePadding: false,
-    label: "Date Of Birth",
+    label: "Check In Date",
   },
   {
-    id: "contactNumber",
+    id: "checkOutDate",
     disablePadding: false,
-    label: "Contact Number",
+    label: "Check Out Date",
   },
-  { id: "email", disablePadding: false, label: "Email" },
+  { id: "numberOfGuests", disablePadding: false, label: "Number of Guests" },
+  { id: "roomName", disablePadding: false, label: "Room Name" },
+  { id: "bookingStatus", disablePadding: false, label: "Booking Status" },
 ];
 
 function TableHeads(props) {

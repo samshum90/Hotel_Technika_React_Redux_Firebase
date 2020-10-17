@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { withFirebase } from "../Firebase";
 
 import { Paper, TextField, Button, Typography } from "@material-ui/core";
@@ -36,7 +36,6 @@ function BookingForm({
   setCheckOutDate,
   numberOfGuests,
   setNumberOfGuests,
-  dateGreaterThan,
   checkInDate,
   checkOutDate,
 }) {
@@ -90,6 +89,10 @@ function BookingForm({
     <Paper className={classes.paper}>
       <Typography variant="h5" gutterBottom className={classes.title}>
         Find a Room
+      </Typography>
+      <Typography>
+        Please enter your desired check in and check out dates including the
+        number of your party
       </Typography>
       <form className={classes.form} onSubmit={handleSubmit}>
         <TextField

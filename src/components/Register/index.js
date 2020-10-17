@@ -15,6 +15,7 @@ import {
   FormControlLabel,
   TextField,
   Button,
+  Typography,
 } from "@material-ui/core";
 import * as ROLES from "../../constants/roles";
 
@@ -123,7 +124,13 @@ function Register(props) {
   return (
     <Container maxWidth="md">
       <Paper className={classes.paper}>
-        <h2>Registration</h2>
+        <Typography variant="h6" gutterBottom className={classes.title}>
+          Registration
+        </Typography>
+        <Typography>
+          Please ensure all guest registration information is accurate and
+          complete
+        </Typography>
 
         <form onSubmit={handleSubmit} className={classes.root}>
           <div>

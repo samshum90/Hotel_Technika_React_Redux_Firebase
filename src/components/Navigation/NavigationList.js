@@ -38,7 +38,7 @@ const NavigationList = ({ authUser, setOpen }) =>
     <NavigationListNonAuth setOpen={setOpen} />
   );
 
-const NavigationListAuth = ({ setOpen }) => {
+const NavigationListAuth = ({ authUser, setOpen }) => {
   const classes = useStyles();
 
   return (
@@ -48,59 +48,65 @@ const NavigationListAuth = ({ setOpen }) => {
       onClick={() => setOpen(false)}
       onKeyDown={() => setOpen(false)}
     >
-      <List>
-        <ListItem button>
-          <ListItemIcon>
-            <ContactMailIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Link to={ROUTES.REGISTER}>Register</Link>
-          </ListItemText>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <ImportContactsIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Link to={ROUTES.BOOKINGS}>Bookings</Link>
-          </ListItemText>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <RoomServiceIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
-          </ListItemText>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <EmojiPeopleIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Link to={ROUTES.GUESTS}>Guests</Link>
-          </ListItemText>
-        </ListItem>
-      </List>
+      {(!!authUser.roles[ROLES.ADMIN] || !!authUser.roles[ROLES.STAFF]) && (
+        <List>
+          <ListItem button>
+            <ListItemIcon>
+              <ContactMailIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Link to={ROUTES.REGISTER}>Register</Link>
+            </ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <ImportContactsIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Link to={ROUTES.BOOKINGS}>Bookings</Link>
+            </ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <RoomServiceIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Link to={ROUTES.RESERVATIONS}>Reservations</Link>
+            </ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <EmojiPeopleIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Link to={ROUTES.GUESTS}>Guests</Link>
+            </ListItemText>
+          </ListItem>
+        </List>
+      )}
+      <Divider />
+      {!!authUser.roles[ROLES.ADMIN] && (
+        <List>
+          <ListItem button>
+            <ListItemIcon>
+              <MeetingRoomIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Link to={ROUTES.ROOM}>Rooms</Link>
+            </ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <PeopleOutlineIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Link to={ROUTES.STAFF}>Staff</Link>
+            </ListItemText>
+          </ListItem>
+        </List>
+      )}
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemIcon>
-            <MeetingRoomIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Link to={ROUTES.ROOM}>Rooms</Link>
-          </ListItemText>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <PeopleOutlineIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Link to={ROUTES.STAFF}>Staff</Link>
-          </ListItemText>
-        </ListItem>
-        <Divider />
         <ListItem button>
           <ListItemIcon>
             <SupervisorAccountIcon />

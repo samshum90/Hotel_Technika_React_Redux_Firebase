@@ -10,6 +10,7 @@ import {
   FormControl,
   IconButton,
   InputAdornment,
+  Typography,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import { makeStyles } from "@material-ui/core/styles";
@@ -161,7 +162,10 @@ function RoomForm(props) {
 
   return (
     <Paper className={classes.paper}>
-      <h2>Add a Room</h2>
+      <Typography variant="h6" gutterBottom className={classes.title}>
+        Add a Room
+      </Typography>
+
       <form className={classes.root} onSubmit={handleSubmit}>
         <TextField
           id="filled-margin-none"

@@ -14,7 +14,6 @@ import {
   Box,
   CardActions,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
   List,

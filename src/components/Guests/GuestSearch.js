@@ -6,7 +6,6 @@ import { Typography, TextField, Button } from "@material-ui/core/";
 function GuestSearch({ classes, guests, setFilteredGuests }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -141,7 +140,7 @@ function GuestSearch({ classes, guests, setFilteredGuests }) {
             className={classes.textField}
             variant="filled"
             type="text"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setPostcode(e.target.value)}
           />
         </div>
         <div className={classes.divider}>

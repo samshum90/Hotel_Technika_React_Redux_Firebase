@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogContentText,
+  Checkbox,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+  },
+  buttonCell: {
+    display: "flex",
+    "justify-content": "space-evenly",
+    flexWrap: "wrap",
   },
 }));
 
@@ -40,7 +47,7 @@ function ReservationListItem(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
-  const { reservation, error, setError } = props;
+  const { reservation, error, setError, selected, setSelected, index } = props;
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
@@ -67,10 +74,10 @@ function ReservationListItem(props) {
   }));
 
   useEffect(() => {
-    if (!reservation.length) {
+    if (!room) {
       settingState();
     }
-  }, [reservation, reservation.status]);
+  }, [room]);
 
   function settingState() {
     if (!checkInDate) {
@@ -158,6 +165,7 @@ function ReservationListItem(props) {
 
   const checkIn = () => {
     setStatus("Checked In");
+    const status = "Checked In";
     props.firebase
       .fetchId("bookings", reservation.uid)
       .update({ status })
@@ -168,6 +176,7 @@ function ReservationListItem(props) {
 
   const checkOut = () => {
     setStatus("Completed");
+    const status = "Completed";
     props.firebase
       .fetchId("bookings", reservation.uid)
       .update({ status })
@@ -176,7 +185,7 @@ function ReservationListItem(props) {
       });
   };
   function ConditionalButtons() {
-    if (reservation.status === "Checked In") {
+    if (status === "Checked In") {
       return (
         <Button
           color="secondary"
@@ -189,7 +198,7 @@ function ReservationListItem(props) {
           Check Out
         </Button>
       );
-    } else if (reservation.status === "Completed") {
+    } else if (status === "Completed") {
       return null;
     } else {
       return (
@@ -207,16 +216,54 @@ function ReservationListItem(props) {
     }
   }
 
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
+  };
+  // const isItemSelected = isSelected(guest.firstName);
+  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const labelId = `enhanced-table-checkbox-${index}`;
+
   return (
     <>
-      <TableRow hover className={classes.row}>
+      <TableRow
+        hover
+        onClick={(event) => handleClick(event, reservation.uid)}
+        className={classes.row}
+        role="checkbox"
+        aria-checked={isSelected(reservation.uid)}
+        tabIndex={-1}
+        key={reservation.fistName}
+        selected={isSelected(reservation.uid)}
+      >
+        <TableCell padding="checkbox">
+          <Checkbox
+            checked={isSelected(reservation.uid)}
+            inputProps={{ "aria-labelledby": labelId }}
+          />
+        </TableCell>
         <TableCell>{reservation.uid}</TableCell>
         <TableCell>{checkInDate}</TableCell>
         <TableCell>{checkOutDate}</TableCell>
         <TableCell>{numberOfGuests}</TableCell>
         <TableCell>{room.roomName}</TableCell>
         <TableCell>{status}</TableCell>
-        <TableCell>
+        <TableCell className={classes.buttonCell}>
           {ConditionalButtons()}
 
           <Button
