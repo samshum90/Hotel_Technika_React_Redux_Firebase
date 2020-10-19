@@ -1,12 +1,12 @@
-# Gym Master Ruby Project
+# Hotel Technika React Project
 
 [Live App on Firebase](https://hotel-technika.web.app/)
 
 This is my React app to update and practise all the new features of React 16 built with Redux and firebase for authentication and database.
 
-The project is designed to be used in a Hotel to manage check in of guests into rooms.
+The project is designed to be used in a Hotel to manage check ins of guests into rooms.
 
-![alt text](https://github.com/samshum90/Hotel_Technika/raw/master/public/readme/Hotel_Technika.gif "Gif of the hotel technika app in use")
+![alt text](https://github.com/samshum90/Hotel_Technika_React_Redux_Firebase/raw/master/public/Hotel_Technika.gif "Gif of the hotel technika app in use")
 
 ### Features:
       *Firebase Realtime Database used as a backend
