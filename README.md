@@ -13,6 +13,7 @@ The project is designed to be used in a Hotel to manage check ins of guests into
       *Features Firebase authentication
       *Redux for global state management
       *Fully built with mordern React features using hooks such as useState, useEffects, useSelector and useDispatch
+      *Material UI was used for all the styling
 
 ### Project setup
 
