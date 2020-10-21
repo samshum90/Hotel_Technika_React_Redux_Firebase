@@ -9,11 +9,11 @@ The project is designed to be used in a Hotel to manage check ins of guests into
 ![alt text](https://github.com/samshum90/Hotel_Technika_React_Redux_Firebase/raw/master/public/Hotel_Technika.gif "Gif of the hotel technika app in use")
 
 ### Features:
-      *Firebase Realtime Database used as a backend
-      *Features Firebase authentication
-      *Redux for global state management
-      *Fully built with mordern React features using hooks such as useState, useEffects, useSelector and useDispatch
-      *Material UI was used for all the styling
+* Firebase Realtime Database used as a backend
+* Features Firebase authentication
+* Redux for global state management
+* Fully built with mordern React features using hooks such as useState, useEffects, useSelector and useDispatch
+* Material UI was used for all the styling
 
 ### Project setup
 
