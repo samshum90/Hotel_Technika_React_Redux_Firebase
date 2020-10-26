@@ -2,6 +2,12 @@
 
 [Live App on Firebase](https://hotel-technika.web.app/)
 
+| Autherization Level  | Username           | Password  |
+| ------------- |:-------------:| :-----:|
+| Admin    | hotel_technika@tecknika.com | Technika |
+| Staff     | staff@tecknika.com      |   Technika |
+| Guest | guest@technika.com      |    Technika |
+
 This is my React app to update and practise all the new features of React 16 built with Redux and firebase for authentication and database.
 
 The project is designed to be used in a Hotel to manage check ins of guests into rooms.
@@ -11,6 +17,7 @@ The project is designed to be used in a Hotel to manage check ins of guests into
 ### Features:
 * Firebase Realtime Database used as a backend
 * Features Firebase authentication
+* Three tier Role authorization Admin, Staff and Guest
 * Redux for global state management
 * Fully built with mordern React features using hooks such as useState, useEffects, useSelector and useDispatch
 * Material UI was used for all the styling
