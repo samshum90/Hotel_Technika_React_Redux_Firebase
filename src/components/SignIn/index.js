@@ -67,6 +67,7 @@ function SignInFormBase(props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="text"
+          defaultValue="hotel_technika@tecknika.com"
         />
       </div>
       <div className={classes.TextField}>
@@ -77,6 +78,7 @@ function SignInFormBase(props) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
+          defaultValue="Technika"
         />
       </div>
       <Button
